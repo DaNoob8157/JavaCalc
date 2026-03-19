@@ -1,0 +1,269 @@
+﻿Rubric & Overview
+🧮 Java GUI Calculator Project Rubric
+📌 Project Overview
+In this project, students will build a Java Calculator Application using:
+* Java Swing (GUI)
+
+* Layout Managers
+
+* ActionListeners
+
+* Object-Oriented Programming (OOP)
+
+Students will progress through three levels:
+   * Core (Required) → Functional calculator
+
+   * Intermediate → Additional tools and features
+
+   * Advanced → Complex logic and architecture
+
+________________
+
+
+🏆 Grading Breakdown (100 Points)
+Category
+	Points
+	Core Features
+	40
+	Intermediate Features
+	20
+	Advanced Features
+	10
+	Code Quality
+	10
+	Documentation
+	10
+	Presentation
+	10
+	Total
+	100
+	________________
+
+
+🔹 Core Level (40 Points)
+Criteria
+	Description
+	Points
+	GUI Layout
+	Uses Layout Manager correctly
+	8
+	Buttons Work
+	All calculator buttons function
+	8
+	Input Restrictions
+	No free typing in display
+	6
+	ActionListeners
+	Proper event handling
+	6
+	Math Operations
+	+, -, *, / work correctly
+	6
+	Error Handling
+	Handles divide-by-zero
+	3
+	OOP Structure
+	Uses multiple classes
+	3
+	________________
+
+
+🔹 Intermediate Level (20 Points)
+Criteria
+	Description
+	Points
+	Multiple Views
+	Switch between tools
+	6
+	History
+	Displays past calculations
+	5
+	Converter
+	At least 5 conversion types
+	5
+	Tip Calculator
+	Calculates tip & total
+	4
+	________________
+
+
+🔹 Advanced Level (10 Points)
+Criteria
+	Description
+	Points
+	Order of Operations
+	Handles expressions correctly
+	5
+	Scientific Features
+	sqrt, trig, powers, etc.
+	3
+	Architecture
+	MVC or JavaFX
+	2
+	________________
+
+
+🔹 Code Quality (10 Points)
+Criteria
+	Points
+	Variable naming
+	2
+	Organization
+	2
+	Separation of concerns
+	3
+	Formatting
+	2
+	Comments
+	1
+	________________
+
+
+🔹 Documentation (10 Points)
+Required README Sections:
+      * Project Title
+
+      * Purpose
+
+      * Features
+
+      * How it Works
+
+      * Class Structure
+
+      * Challenges
+
+      * Future Improvements
+
+Criteria
+	Points
+	All sections present
+	3
+	Feature explanation
+	2
+	Class explanation
+	2
+	GUI/Event explanation
+	1
+	Challenges
+	1
+	Improvements
+	1
+	________________
+
+
+🔹 Presentation (10 Points)
+Criteria
+	Points
+	Demo works
+	3
+	Explains features
+	2
+	Explains code
+	2
+	Discusses challenge
+	2
+	Answers question
+	1
+	________________
+________________
+
+
+
+
+Student CheckList
+2️⃣ Student-Friendly Checklist Version ✅
+________________
+
+
+🧮 Calculator Project Checklist
+✅ CORE (Required)
+         * I created a calculator GUI with buttons
+
+         * I used a Layout Manager (NOT null layout)
+
+         * My display cannot be typed into freely
+
+         * Buttons update the display correctly
+
+         * I used ActionListeners
+
+         * My calculator performs +, -, *, /
+
+         * My program handles division by zero
+
+         * I used at least 2 classes (GUI + Logic)
+
+________________
+
+
+🚀 INTERMEDIATE
+            * I added multiple views (Calculator, Converter, Tip)
+
+            * I implemented a calculation history
+
+            * I built a converter (at least 5 types)
+
+            * I created a tip calculator
+
+________________
+
+
+🧠 ADVANCED
+               * My calculator follows order of operations
+
+               * I added scientific functions
+
+               * I improved architecture (MVC or JavaFX)
+
+________________
+
+
+🧹 CODE QUALITY
+                  * My variable names are clear
+
+                  * My code is organized into methods/classes
+
+                  * My GUI and logic are separate
+
+                  * My code is formatted properly
+
+                  * I included helpful comments
+
+________________
+
+
+📄 DOCUMENTATION
+                     * I completed my README
+
+                     * I explained how my calculator works
+
+                     * I described my classes
+
+                     * I explained a challenge I faced
+
+                     * I listed future improvements
+
+________________
+
+
+🎤 PRESENTATION
+                        * My program runs without errors
+
+                        * I can explain my features
+
+                        * I can explain my code structure
+
+                        * I can describe a challenge I solved
+
+                        * I can answer questions
+
+
+
+
+RESOURCES
+RESOURCES
+
+
+Boiler Plate Code 
+                           * https://github.com/rgeorge-coach/Calculator-Java.git

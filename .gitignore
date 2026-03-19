@@ -3,6 +3,10 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 .kotlin
+.idea/
+*.iml
+*.iws
+*.ipr
 
 ### Eclipse ###
 .apt_generated
@@ -25,6 +29,35 @@ bin/
 
 ### VS Code ###
 .vscode/
+*.code-workspace
 
 ### Mac OS ###
 .DS_Store
+
+### Configuration Files ###
+*.properties
+*.yaml
+*.yml
+*.xml
+!pom.xml
+!build.xml
+
+### Build & Dependency Management ###
+target/
+build/
+.gradle/
+gradle/
+*.jar
+*.war
+*.ear
+
+### Environment & Secrets ###
+.env
+.env.local
+.env.*.local
+secrets/
+
+### OS Generated Files ###
+Thumbs.db
+.AppleDouble
+.LSOverride
