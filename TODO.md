@@ -20,14 +20,14 @@
 | ☐ | Support for scientific notation | |
 
 ## UI/UX Improvements
-| Done | Task | Assigned/Dibs    |
-|------|------|------------------|
+| Done | Task | Assigned/Dibs     |
+|------|------|-------------------|
 | ☐ | Design professional GUI layout | `@Phantom-StormX` |
-| ☐ | Add keyboard input support |                  |
-| ☐ | Implement button feedback (visual/audio) | `@danoob8157`    |
-| ☐ | Display calculation history |                  |
-| ☐ | Add keyboard shortcuts for operations |                  |
-| ☐ | Implement dark/light theme toggle |                  |
+| ☐ | Add keyboard input support |                   |
+| ☐ | Implement button feedback (visual/audio) | `@danoob8157`     |
+| ☐ | Display calculation history |                   |
+| ☐ | Add keyboard shortcuts for operations |                   |
+| ☐ | Implement dark/light theme toggle | `@danoob8157`      |
 
 ## Error Handling
 | Done | Task | Assigned/Dibs |
@@ -48,12 +48,12 @@
 | ☐ | Implement proper exception handling | |
 
 ## Documentation
-| Done | Task | Assigned/Dibs    |
-|------|------|------------------|
-| ☐ | Complete README.md with usage instructions |                  |
-| ☐ | Add architecture diagram |                  |
-| ☐ | Create user guide |                  |
-| ☐ | Document all public methods |                  |
+| Done | Task | Assigned/Dibs     |
+|------|------|-------------------|
+| ☐ | Complete README.md with usage instructions | `@danoob8157`     |
+| ☐ | Add architecture diagram | `@danoob8157`     |
+| ☐ | Create user guide | `@danoob8157`       |
+| ☐ | Document all public methods |                   |
 | ☐ | Add code comments for complex logic | `@Phantom-StormX` |
 
 ## Optional Enhancements
