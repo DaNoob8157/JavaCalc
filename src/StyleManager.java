@@ -6,6 +6,8 @@
 //
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
+import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
 
 /**
@@ -13,63 +15,124 @@ import java.awt.*;
  * Works with CSSParser to read CSS files and apply styling
  */
 public class StyleManager {
-    
-    // TODO: Add a CSSParser field to hold the parser instance
-    // private CSSParser parser;
+    private final CSSParser parser;
     
     /**
      * Constructor - Initialize the StyleManager with a CSS file path
      * @param cssFilePath Path to the CSS file (e.g., "src/Styling/style-dark.css")
-     * 
-     * TODO: Create a new CSSParser and load the CSS file
      */
     public StyleManager(String cssFilePath) {
-        // TODO: Implement parser initialization
+        parser = new CSSParser();
+        parser.loadCSS(cssFilePath);
     }
     
     /**
      * Style a JButton using CSS properties
      * @param button The button to style
      * @param selector CSS selector (e.g., ".button")
-     * 
-     * TODO: Get background color, text color, font size from parser
-     * TODO: Apply those values to the button using setBackground(), setForeground(), setFont()
      */
     public void styleButton(JButton button, String selector) {
-        // TODO: Implement button styling
+        Color background = parser.getBackgroundColor(selector);
+        Color textColor = parser.getTextColor(selector);
+        Color pressedBackground = parser.getBackgroundColor(selector + ":pressed");
+        int fontSize = parser.getFontSize(selector);
+        String fontFamily = parser.getFontFamily(selector);
+
+        // Keep default calculator buttons readable if a CSS file/path fails to load.
+        if (".button".equals(selector)) {
+            if (background == null) {
+                background = new Color(92, 97, 104);
+            }
+            if (textColor == null) {
+                textColor = Color.WHITE;
+            }
+        }
+
+        if (pressedBackground == null && background != null) {
+            pressedBackground = background.darker();
+        }
+
+        // Use a basic UI delegate so custom colors are honored across platform LAFs.
+        button.setUI(new BasicButtonUI());
+
+        if (background != null) {
+            button.setBackground(background);
+            button.setOpaque(true);
+            button.setContentAreaFilled(true);
+        }
+
+        if (textColor != null) {
+            button.setForeground(textColor);
+        }
+
+        button.setFocusPainted(false);
+        if (background != null) {
+            button.setBorder(new LineBorder(background.brighter().brighter(), 1));
+        }
+
+        final Color normalBackground = background;
+        final Color activePressedBackground = pressedBackground;
+        if (normalBackground != null && activePressedBackground != null) {
+            button.getModel().addChangeListener(e -> {
+                ButtonModel model = button.getModel();
+                button.setBackground(model.isPressed() ? activePressedBackground : normalBackground);
+            });
+        }
+
+        if (fontSize > 0 || fontFamily != null) {
+            Font current = button.getFont();
+            String resolvedFamily = fontFamily != null ? fontFamily : current.getFamily();
+            int resolvedSize = fontSize > 0 ? fontSize : current.getSize();
+            button.setFont(new Font(resolvedFamily, current.getStyle(), resolvedSize));
+        }
     }
     
     /**
      * Style a JPanel using CSS properties
      * @param panel The panel to style
      * @param selector CSS selector (e.g., ".root")
-     * 
-     * TODO: Get background color from parser and apply to panel
      */
     public void stylePanel(JPanel panel, String selector) {
-        // TODO: Implement panel styling
+        Color background = parser.getBackgroundColor(selector);
+        if (background != null) {
+            panel.setBackground(background);
+            panel.setOpaque(true);
+        }
     }
     
     /**
      * Style a JTextPane using CSS properties
      * @param textPane The text pane to style
      * @param selector CSS selector (e.g., ".root")
-     * 
-     * TODO: Get background color, text color, font from parser
-     * TODO: Apply those values to the text pane
      */
     public void styleTextPane(JTextPane textPane, String selector) {
-        // TODO: Implement text pane styling
+        Color background = parser.getBackgroundColor(selector);
+        Color textColor = parser.getTextColor(selector);
+        int fontSize = parser.getFontSize(selector);
+        String fontFamily = parser.getFontFamily(selector);
+
+        if (background != null) {
+            textPane.setBackground(background);
+            textPane.setOpaque(true);
+        }
+
+        if (textColor != null) {
+            textPane.setForeground(textColor);
+        }
+
+        if (fontSize > 0 || fontFamily != null) {
+            Font current = textPane.getFont();
+            String resolvedFamily = fontFamily != null ? fontFamily : current.getFamily();
+            int resolvedSize = fontSize > 0 ? fontSize : current.getSize();
+            textPane.setFont(new Font(resolvedFamily, current.getStyle(), resolvedSize));
+        }
     }
     
     /**
      * Get the parser instance for custom operations
      * @return The CSSParser instance
-     * 
-     * TODO: Return the parser field
      */
     public CSSParser getParser() {
-        // TODO: Return the parser
-        return null;
+        return parser;
     }
 }
