@@ -27,7 +27,14 @@ public class Main{
             System.out.println("Please enter a operation");
             String operator = scanner.next();
 
-            double result = 0;
+
+            /*
+            GUYS, I HAVE AN IDEA:
+            for in our actual calculator, what if we make all the buttons
+            function as chrarchters added to strings, and then we can
+            split the string from numbers and symbols, and then factor in
+            logic, order of oerations, etc.
+             */
 
             // operator logic
             switch (operator){
