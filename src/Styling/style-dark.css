@@ -24,9 +24,19 @@
 
 /* Buttons */
 .button {
-    -fx-background-color: #333333;
-    -fx-text-fill: #f0f0f0;
+    -fx-background-color: #5c6168;
+    -fx-text-fill: #ffffff;
     -fx-font-family: "System";
+    -fx-border-color: #747a84;
+    -fx-border-width: 1;
+}
+
+.button:hover {
+    -fx-background-color: #6a7078;
+}
+
+.button:pressed {
+    -fx-background-color: #4a4f57;
 }
 
 /* Choice buttons */
