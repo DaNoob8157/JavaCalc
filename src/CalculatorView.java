@@ -7,7 +7,6 @@
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
@@ -19,28 +18,25 @@ import java.awt.event.ActionListener;
  *
  * */
 public class CalculatorView extends JFrame {
+    private static final String DEFAULT_THEME_PATH = "src/Styling/style-dark.css";
 
     private ActionListener btnLstnr;
-    private JPanel panel, btnPanel;
-    private JTextPane displayPane;
-    private JScrollPane scrollPane;
-    private String[] btnTextArray = {"DEL","AC","+/-","%","7","8","9","X",
+    private final String[] btnTextArray = {"DEL","AC","+/-","%","7","8","9","X",
             "4","5","6","-","1","2","3","+",".","0","=", "/"};
+    private final StyleManager styleManager;
 
     /**
      * Boilerplate constructor to create view
      * */
 
     public CalculatorView() {
-
-        SwingUtilities.invokeLater(() -> {
-            createAndShowGUI();
-        });
+        styleManager = new StyleManager(DEFAULT_THEME_PATH);
 
         setTitle("Calculator");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setVisible(true);
+        createAndShowGUI();
         setSize(500, 520);
+        setVisible(true);
     }
 
 
@@ -50,6 +46,7 @@ public class CalculatorView extends JFrame {
      * You can also change the parameters as you see fit.
      * */
     public CalculatorView (int width, int height){
+        styleManager = new StyleManager(DEFAULT_THEME_PATH);
         setSize(width, height);
     }
 
@@ -59,7 +56,7 @@ public class CalculatorView extends JFrame {
 
     private void addComponentsToPane(){
         // Create main panel to contain display & buttons
-        panel = new JPanel(new GridBagLayout());
+        JPanel panel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
         /* === ROW 0: TEXT FIELD FOR CALCULATOR === */
@@ -71,20 +68,16 @@ public class CalculatorView extends JFrame {
         gbc.fill = GridBagConstraints.BOTH;
 
         //Create a text pane to act as a display for the calculator
-        displayPane = new JTextPane();
-        displayPane.setFont(new Font("Arial", Font.TRUETYPE_FONT, 40));
+        JTextPane displayPane = new JTextPane();
+        displayPane.setFont(new Font("Arial", Font.PLAIN, 40));
         displayPane.setEditable(true);
-        displayPane.setOpaque(false);
-        displayPane.setBackground(Color.BLACK);
+        displayPane.setOpaque(true);
 
-        scrollPane = new JScrollPane(displayPane);
+        JScrollPane scrollPane = new JScrollPane(displayPane);
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         panel.add(scrollPane, gbc);
 
-        // Create an empty label for spacing purposes
-        JLabel lblNewLabel = new JLabel();
-        panel.add(lblNewLabel, gbc);
 
         /* === ROW 2: Button Pad === */
         gbc.fill = GridBagConstraints.BOTH;
@@ -95,12 +88,23 @@ public class CalculatorView extends JFrame {
         gbc.weighty = 1.05;
 
         // Create button grid and add buttons
-        btnPanel = new JPanel(new GridLayout(5,5,0,0));
+        JPanel btnPanel = new JPanel(new GridLayout(5,5,0,0));
         for (String text : btnTextArray) {
             JButton button = new JButton(text);
             button.addActionListener(btnLstnr);
+            styleManager.styleButton(button, ".button");
             btnPanel.add(button);
         }
+
+        // This 
+        styleManager.stylePanel(panel, ".root");
+        styleManager.stylePanel(btnPanel, ".root");
+        styleManager.styleTextPane(displayPane, ".root");
+        Color rootColor = styleManager.getParser().getBackgroundColor(".root");
+        if (rootColor != null) {
+            scrollPane.getViewport().setBackground(rootColor);
+        }
+
         panel.add(btnPanel, gbc);
 
         add(panel);
@@ -111,9 +115,7 @@ public class CalculatorView extends JFrame {
     }
 
     /* Main method to run and view boiler plate code */
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-           CalculatorView myCalculatorView = new CalculatorView();
-        });
+    static void main(String[] args) {
+        SwingUtilities.invokeLater(CalculatorView::new);
     }
 }

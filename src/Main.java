@@ -1,4 +1,3 @@
-import java.util.Scanner;
 //
 //  Main.java
 //  JavaCalc-Class
@@ -6,17 +5,16 @@ import java.util.Scanner;
 //  Created by DaNoob8157 on 03/19/26
 //
 
+import java.util.Scanner;
+
 public class Main{
-    public static void main (String[] args) {
+    static void main (String[] args) {
         // CalculatorController controller = new CalculatorController();
 
         // initializes user interface
         Scanner scanner = new Scanner(System.in);
-        //creates a loop
-        boolean whileCalc = true;
 
-        //everything in while loop happens when whileCalc is true
-        while (whileCalc) {
+        while (true) {
 
             System.out.print("Enter first number: ");
             double num1 = scanner.nextDouble();
@@ -37,7 +35,8 @@ public class Main{
              */
 
             // operator logic
-            switch (operator){
+            double result;
+            switch (operator) {
                 case "+":
                     result = num1 + num2;
                     break;
@@ -50,7 +49,12 @@ public class Main{
                 case "/":
                     result = num1 / num2;
                     break;
+                default:
+                    System.out.println("Invalid operation");
+                    continue;
             }
+
+            System.out.println("Result: " + result);
 
         }
 

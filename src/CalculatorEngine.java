@@ -11,7 +11,7 @@
  * */
 public class CalculatorEngine{
 
-    private double result = 0;
+    private final double result = 0;
 
     public CalculatorEngine (){
 
