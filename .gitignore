@@ -50,6 +50,7 @@ gradle/
 *.jar
 *.war
 *.ear
+*.class
 
 ### Environment & Secrets ###
 .env
