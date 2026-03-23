@@ -6,12 +6,11 @@
 //
 
 /**
- * CLass to implement functionality of calculator.
- *
+ * Class to implement functionality of calculator.
  * */
 public class CalculatorEngine{
 
-    private final double result = 0;
+    private double result = 0;
 
     public CalculatorEngine (){
 
