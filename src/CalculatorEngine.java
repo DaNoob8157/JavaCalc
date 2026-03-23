@@ -1,10 +1,3 @@
-//
-//  CalculatorEngine.java
-//  JavaCalc-Class
-//
-//  Created by DaNoob8157 on 03/19/26
-//
-
 /**
  * Class to implement functionality of calculator.
  * */
