@@ -33,7 +33,7 @@ public class Main{
             split the string from numbers and symbols, and then factor in
             logic, order of oerations, etc.
 
-            I think i get what ur saying, that's a good idea! -iz
+            I think i get what ur saying, that's a good idea! -izzy
              */
 
             // operator logic
