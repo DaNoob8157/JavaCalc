@@ -32,6 +32,8 @@ public class Main{
             function as chrarchters added to strings, and then we can
             split the string from numbers and symbols, and then factor in
             logic, order of oerations, etc.
+
+            I think i get what ur saying, that's a good idea! -iz
              */
 
             // operator logic
