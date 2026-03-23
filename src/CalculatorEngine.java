@@ -1,17 +1,10 @@
-//
-//  CalculatorEngine.java
-//  JavaCalc-Class
-//
-//  Created by DaNoob8157 on 03/19/26
-//
-
 /**
  * CLass to implement functionality of calculator.
  *
  * */
 public class CalculatorEngine{
 
-    private final double result = 0;
+    private double result = 0;
 
     public CalculatorEngine (){
 
