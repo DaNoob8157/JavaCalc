@@ -30,7 +30,9 @@ public class CalculatorController {
          */
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println(e.getActionCommand());
+            myView.displayPane.setText(e.getActionCommand());
+
+            }
+
         }
     }
-}
