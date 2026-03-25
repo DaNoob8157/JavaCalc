@@ -6,7 +6,13 @@
   - Tip calculator
   - Measurment Converter
   - Alternate views can be accessed through the view 
-   
+
+## Features
+- Java Swing (GUI)
+- Layout Managers
+- ActionListeners
+- Object-Oriented Programming (OOP)
+
 ## Example
   
 
