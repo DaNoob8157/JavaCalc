@@ -43,17 +43,12 @@ public class CalculatorEngine {
 
     public void evaluateExpression() {
 
-        Scanner scan = new Scanner(System.in);
-        String calculation = scan.nextLine();
-        String [] parts = calculation.split(" ");
-        String s="12";
-        int i = Integer.parseInt(s);
+        String calculation = "1+2"; //pass from panel
+        String[] calulation = calculation.split("[+\\-*/]"); // tells regex engine to "treat those as literal characters"
+        // StringBuilder result = new StringBuilder();
 
-        switch (parts[2]) {
+        for (eghieruhwfe)
 
-            // String ans = String.valueOf(Integer.parseInt(parts[0]) / Integer.parseInt(parts[1]));
-
-        }
 
    }
 }
