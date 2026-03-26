@@ -67,7 +67,6 @@ public class CalculatorEngine {
 
             else if sign ==+
                 render (a+b)  to the panel (etc for *-/)
-
         }
 
         */
