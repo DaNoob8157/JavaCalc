@@ -24,8 +24,8 @@ public class CalculatorView extends JFrame {
     private JPanel panel, btnPanel;
     JTextPane displayPane;
     private JScrollPane scrollPane;
-    private String[] btnTextArray = {"DEL","AC","+/-","%","7","8","9","X",
-            "4","5","6","-","1","2","3","+",".","0","=", "/"};
+    private String[] btnTextArray = {"DEL","AC","+/-","%","Tip","7","8","9","X","Measurement Converter",
+            "4","5","6","-","Main View","1","2","3","+","HAPPINESS",".","0","=", "/","Exit"};
 
     /**
      * Boilerplate constructor to create view
@@ -95,7 +95,7 @@ public class CalculatorView extends JFrame {
         gbc.weighty = 1.05;
 
         // Create button grid and add buttons
-        btnPanel = new JPanel(new GridLayout(5,5,0,0));
+        btnPanel = new JPanel(new GridLayout(5,6,0,0));
         for (String text : btnTextArray) {
             JButton button = new JButton(text);
             button.addActionListener(btnLstnr);

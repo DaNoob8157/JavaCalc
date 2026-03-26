@@ -43,17 +43,33 @@ public class CalculatorEngine {
 
     public void evaluateExpression() {
 
-        Scanner scan = new Scanner(System.in);
-        String calculation = scan.nextLine();
-        String [] parts = calculation.split(" ");
-        String s="12";
-        int i = Integer.parseInt(s);
+        String expression = "1+2";
+        String[] parts = expression.split("[+\\-/*]");
 
-        switch (parts[2]) {
 
-            // String ans = String.valueOf(Integer.parseInt(parts[0]) / Integer.parseInt(parts[1]));
+
+
+        // PSUEDOCODE CODE THINGYMABOBBER
+        /* for (parts){
+            if first
+                if number
+                    then assign to a
+                else
+                    print error (because it is a operator, and that is not good no no no)
+            else if operator
+                assign operator
+            else if number
+                assign b
+
+            if a and b and operator:
+                if there is another part
+                    print error
+
+            else if sign ==+
+                render (a+b)  to the panel (etc for *-/)
 
         }
 
+        */
    }
 }
