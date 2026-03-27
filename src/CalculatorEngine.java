@@ -1,7 +1,7 @@
 /**
  * Class to implement functionality of calculator.
  * */
-public class CalculatorEngine{
+public class CalculatorEngine {
 
     private double result = 0;
 
