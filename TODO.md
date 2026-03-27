@@ -1,4 +1,3 @@
-
 # JavaCalc-Class Project TODO
 
 ## Core Features
