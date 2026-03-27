@@ -3,11 +3,11 @@
 ## Core Features
 | Done | Task | Assigned/Dibs   |
 |------|------|-----------------|
-| ☐ | Implement basic arithmetic operations (add, subtract, multiply, divide) | `@Phantom-StormX` |
-| ☐ | Add support for decimal numbers and floating-point calculations | `@Phantom-StormX` |
-| ☐ | Implement order of operations (PEMDAS/BODMAS) |                 |
-| ☐ | Add parentheses support for complex expressions |                 |
-| ☐ | Implement clear/reset functionality | `@Phantom-StormX` |
+| ☐    | Implement basic arithmetic operations (add, subtract, multiply, divide) | `@Phantom-StormX` |
+| ☐    | Add support for decimal numbers and floating-point calculations | `@Phantom-StormX` |
+| ☐    | Implement order of operations (PEMDAS/BODMAS) |                 |
+| ☐    | Add parentheses support for complex expressions |                 |
+| ☐    | Implement clear/reset functionality | `@Phantom-StormX` |
 
 ## Advanced Operations
 | Done | Task | Assigned/Dibs |
@@ -19,14 +19,14 @@
 | ☐ | Support for scientific notation | |
 
 ## UI/UX Improvements
-| Done | Task | Assigned/Dibs     |
-|------|------|-------------------|
-| ☐ | Design professional GUI layout | `@Phantom-StormX` |
-| ☐ | Add keyboard input support |                   |
-| ☐ | Implement button feedback (visual/audio) | `@danoob8157`     |
-| ☐ | Display calculation history |                   |
-| ☐ | Add keyboard shortcuts for operations |                   |
-| ☐ | Implement dark/light theme toggle | `@danoob8157`      |
+| Done | Task | Assigned/Dibs    |
+|------|------|------------------|
+| ☐ | Design professional GUI layout | `@Nunchuk-Tylor` |
+| ☐ | Add keyboard input support |                  |
+| ☐ | Implement button feedback (visual/audio) | `@danoob8157`    |
+| ☐ | Display calculation history |                  |
+| ☐ | Add keyboard shortcuts for operations |                  |
+| ☐ | Implement dark/light theme toggle | `@danoob8157`    |
 
 ## Error Handling
 | Done | Task | Assigned/Dibs |
