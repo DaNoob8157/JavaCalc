@@ -22,7 +22,7 @@ public class CalculatorView extends JFrame {
 
     private ActionListener btnLstnr;
     private JPanel panel, btnPanel;
-    JTextPane displayPane;
+    static JTextPane displayPane;
     private JScrollPane scrollPane;
     private String[] btnTextArray = {"DEL","AC","+/-","%","7","8","9","X",
             "4","5","6","-","1","2","3","+",".","0","=", "/"};
@@ -42,7 +42,6 @@ public class CalculatorView extends JFrame {
         setVisible(true);
         setSize(500, 520);
     }
-
 
     /**
      * Custom constructor.
