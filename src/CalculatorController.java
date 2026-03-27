@@ -15,8 +15,10 @@ public class CalculatorController {
 
     public CalculatorController() {
         myEngine = new CalculatorEngine();
+        myView = new CalculatorView();
         myListener = new CustomListener();
-        myView = new CalculatorView(myListener, 500, 520);
+
+        myView.setButtonListener(myListener);
     }
 
     private class CustomListener implements ActionListener {
@@ -28,7 +30,8 @@ public class CalculatorController {
         @Override
         public void actionPerformed(ActionEvent e) {
             myView.displayPane.setText(e.getActionCommand());
+
             }
-        // CalculatorView.playSound("/button-click.mp3");
+
         }
     }

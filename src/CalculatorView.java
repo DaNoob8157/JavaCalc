@@ -5,15 +5,10 @@
 //  Created by DaNoob8157 on 03/19/26
 //
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.net.URL;
 
 /**
  * TODO
@@ -25,34 +20,12 @@ import java.net.URL;
  * */
 public class CalculatorView extends JFrame {
 
-    // Colors for various thingys within the app
-    private static final Color APP_BG = new Color(22, 22, 22);
-    private static final Color PANEL_BG = new Color(30, 30, 30);
-    private static final Color DISPLAY_BG = new Color(18, 18, 18);
-    private static final Color BUTTON_BG = new Color(58, 58, 58);
-    private static final Color BUTTON_BORDER = new Color(80, 80, 80);
-    private static final Color TEXT_COLOR = Color.WHITE;
-
     private ActionListener btnLstnr;
     private JPanel panel, btnPanel;
     JTextPane displayPane;
     private JScrollPane scrollPane;
     private String[] btnTextArray = {"DEL","AC","+/-","%","7","8","9","X",
             "4","5","6","-","1","2","3","+",".","0","=", "/"};
-
-    private void playSound(String resourcePath) {
-        try {
-            URL soundUrl = getClass().getResource(resourcePath);
-            if (soundUrl == null) return;
-
-            AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(soundUrl);
-            Clip clip = AudioSystem.getClip();
-            clip.open(audioInputStream);
-            clip.start();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
 
     /**
      * Boilerplate constructor to create view
@@ -76,16 +49,8 @@ public class CalculatorView extends JFrame {
      * Can be modified anyway you see fit.
      * You can also change the parameters as you see fit.
      * */
-    public CalculatorView (ActionListener lstnr, int width, int height){
-        setTitle("Calculator");
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setVisible(true);
-        setButtonListener(lstnr);
+    public CalculatorView (int width, int height){
         setSize(width, height);
-                SwingUtilities.invokeLater(() -> {
-            createAndShowGUI();
-        });
-
     }
 
     public void setButtonListener(ActionListener lstnr){
@@ -95,8 +60,6 @@ public class CalculatorView extends JFrame {
     private void addComponentsToPane(){
         // Create main panel to contain display & buttons
         panel = new JPanel(new GridBagLayout());
-        // Color init
-        panel.setBackground(PANEL_BG);
         GridBagConstraints gbc = new GridBagConstraints();
 
         /* === ROW 0: TEXT FIELD FOR CALCULATOR === */
@@ -111,17 +74,11 @@ public class CalculatorView extends JFrame {
         displayPane = new JTextPane();
         displayPane.setFont(new Font("Arial", Font.TRUETYPE_FONT, 40));
         displayPane.setEditable(true);
-        // Color init
-        displayPane.setBackground(DISPLAY_BG);
-        displayPane.setForeground(TEXT_COLOR);
-        displayPane.setCaretColor(TEXT_COLOR);
+        displayPane.setOpaque(false);
+        displayPane.setBackground(Color.BLACK);
 
         scrollPane = new JScrollPane(displayPane);
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        // Color init
-        scrollPane.setBorder(BorderFactory.createEmptyBorder());
-        scrollPane.getViewport().setBackground(DISPLAY_BG);
-        scrollPane.setBackground(DISPLAY_BG);
 
         panel.add(scrollPane, gbc);
 
@@ -139,14 +96,8 @@ public class CalculatorView extends JFrame {
 
         // Create button grid and add buttons
         btnPanel = new JPanel(new GridLayout(5,5,0,0));
-        btnPanel.setBackground(PANEL_BG);
         for (String text : btnTextArray) {
             JButton button = new JButton(text);
-            // Color init
-            button.setBackground(BUTTON_BG);
-            button.setForeground(TEXT_COLOR);
-            button.setFocusPainted(false);
-            button.setBorder(BorderFactory.createLineBorder(BUTTON_BORDER));
             button.addActionListener(btnLstnr);
             btnPanel.add(button);
         }
@@ -156,7 +107,6 @@ public class CalculatorView extends JFrame {
     }
 
     public void createAndShowGUI(){
-        getContentPane().setBackground(APP_BG);
         addComponentsToPane();
     }
 
