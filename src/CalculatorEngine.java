@@ -11,42 +11,84 @@ public class CalculatorEngine {
 
     }
 
-    /*Methods to implement calculator functionality*/
-
-    public double add(double a, double b) {
-        return a + b;
-    }
-
-    public double subtract(double a, double b) {
-        return a - b;
-    }
-
-    public double multiply(double a, double b) {
-        return a * b;
-    }
-
-    public double divide(double a, double b) {
-        return a / b;
-    }
-
-    public double modulus(double a, double b) {
-        return a % b;
-    }
-
-    public double switchSign(double a, double b) {
-        return a * -1;
-    }
-
-    public String updateExpression() {
-        return "";
-    }
-
     public void evaluateExpression() {
 
         String expression = "1+2";
         String[] parts = expression.split("[+\\-/*]");
 
+        if (parts.length != 3) {
+            System.out.println("Error: Invalid expression format. Please use 'number operator number' format.");
+            return;
+        }
 
+        // Assign parts based on your logic
+        double a = 0;
+        double b = 0;
+        String operator = "";
+        boolean first = true;
+
+        for (String part : parts) {
+            if (first) {
+                // Check if the first part is a number
+                try {
+                    a = Double.parseDouble(part);
+                    first = false;
+                } catch (NumberFormatException e) {
+                    System.out.println("Error: The first part must be a number (because an operator is not good).");
+                    return;
+                }
+
+            } else if (isOperator(part)) {
+                operator = part;
+            } else {
+                // Assume the remaining part is a number
+                try {
+                    b = Double.parseDouble(part);
+                } catch (NumberFormatException e) {
+                    System.out.println("Error: Invalid number format for the second operand.");
+                    return;
+                }
+            }
+        }
+
+        // Perform the calculation and "render" to the console
+        if (!operator.isEmpty()) {
+            double result = 0;
+            switch (operator) {
+                case "+":
+                    result = a + b;
+                    break;
+                case "-":
+                    result = a - b;
+                    break;
+                case "*":
+                    result = a * b;
+                    break;
+                case "/":
+                    if (b == 0) {
+                        System.out.println("Error: Division by zero is not allowed.");
+                        return;
+                    }
+                    result = a / b;
+                    break;
+                default:
+                    System.out.println("Error: Unknown operator.");
+                    return;
+            }
+            // Render the result to the panel (console in this case)
+            System.out.println("Result: " + result);
+        }
+    }
+
+    /**
+     * Helper method to check if a string is a recognized operator.
+     * @param s The string to check.
+     * @return true if the string is an operator, false otherwise.
+     */
+    public static boolean isOperator(String s) {
+        return s.equals("+") || s.equals("-") || s.equals("*") || s.equals("/");
+    }
+}
 
 
         // PSUEDOCODE CODE THINGYMABOBBER
@@ -70,5 +112,3 @@ public class CalculatorEngine {
         }
 
         */
-   }
-}
