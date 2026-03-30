@@ -60,6 +60,7 @@ public class CalculatorView extends JFrame {
     private void addComponentsToPane(){
         // Create main panel to contain display & buttons
         panel = new JPanel(new GridBagLayout());
+        panel.setBackground(Color.BLACK);
         GridBagConstraints gbc = new GridBagConstraints();
 
         /* === ROW 0: TEXT FIELD FOR CALCULATOR === */
@@ -73,17 +74,23 @@ public class CalculatorView extends JFrame {
         //Create a text pane to act as a display for the calculator
         displayPane = new JTextPane();
         displayPane.setFont(new Font("Arial", Font.TRUETYPE_FONT, 40));
-        displayPane.setEditable(true);
-        displayPane.setOpaque(false);
+        displayPane.setEditable(false);
+        displayPane.setOpaque(true);
         displayPane.setBackground(Color.BLACK);
+        displayPane.setForeground(Color.WHITE);
+        displayPane.setCaretColor(Color.WHITE);
 
         scrollPane = new JScrollPane(displayPane);
+        scrollPane.setBorder(null);
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.getViewport().setBackground(Color.BLACK);
 
         panel.add(scrollPane, gbc);
 
         // Create an empty label for spacing purposes
         JLabel lblNewLabel = new JLabel();
+        lblNewLabel.setBackground(Color.BLACK);
+        lblNewLabel.setOpaque(true);
         panel.add(lblNewLabel, gbc);
 
         /* === ROW 2: Button Pad === */
@@ -96,9 +103,21 @@ public class CalculatorView extends JFrame {
 
         // Create button grid and add buttons
         btnPanel = new JPanel(new GridLayout(5,5,0,0));
+        btnPanel.setBackground(Color.BLACK);
         for (String text : btnTextArray) {
             JButton button = new JButton(text);
             button.addActionListener(btnLstnr);
+            
+            button.setBackground(new Color(50, 50, 50));
+            button.setForeground(Color.WHITE);
+            button.setFocusPainted(false);
+            button.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            
+            // Special color for operators and special buttons
+            if (text.matches("[ACDEL+/\\-%X=]")) {
+                button.setBackground(new Color(80, 80, 80));
+            }
+            
             btnPanel.add(button);
         }
         panel.add(btnPanel, gbc);
