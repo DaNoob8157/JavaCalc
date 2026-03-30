@@ -54,6 +54,13 @@ public class CalculatorView extends JFrame {
 
     public void setButtonListener(ActionListener lstnr){
         btnLstnr = lstnr;
+        if (btnPanel != null) {
+            for (Component c : btnPanel.getComponents()) {
+                if (c instanceof JButton) {
+                    ((JButton) c).addActionListener(btnLstnr);
+                }
+            }
+        }
     }
 
     private void addComponentsToPane(){
@@ -105,7 +112,9 @@ public class CalculatorView extends JFrame {
         btnPanel.setBackground(Color.BLACK);
         for (String text : btnTextArray) {
             JButton button = new JButton(text);
-            button.addActionListener(btnLstnr);
+            if (btnLstnr != null) {
+                button.addActionListener(btnLstnr);
+            }
             
             button.setBackground(new Color(50, 50, 50));
             button.setForeground(Color.WHITE);
