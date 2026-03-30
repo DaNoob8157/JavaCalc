@@ -1,4 +1,4 @@
-import java.util.Scanner;
+import java.awt.*;
 
 /**
  * Class to implement functionality of calculator.
@@ -7,18 +7,24 @@ import java.util.Scanner;
 
 public class CalculatorEngine {
 
+    public static Label evaluateExpression;
+
     public CalculatorEngine() {
+        initGame();
+    }
+
+    public void initGame() {
 
     }
 
-    public void evaluateExpression() {
 
+    public static String evaluateExpression() {
         String expression = "1+2";
         String[] parts = expression.split("[+\\-/*]");
 
         if (parts.length != 3) {
             System.out.println("Error: Invalid expression format. Please use 'number operator number' format.");
-            return;
+            return expression;
         }
 
         // Assign parts based on your logic
@@ -35,7 +41,7 @@ public class CalculatorEngine {
                     first = false;
                 } catch (NumberFormatException e) {
                     System.out.println("Error: The first part must be a number (because an operator is not good).");
-                    return;
+                    return expression;
                 }
 
             } else if (isOperator(part)) {
@@ -46,7 +52,7 @@ public class CalculatorEngine {
                     b = Double.parseDouble(part);
                 } catch (NumberFormatException e) {
                     System.out.println("Error: Invalid number format for the second operand.");
-                    return;
+                    return expression;
                 }
             }
         }
@@ -67,17 +73,18 @@ public class CalculatorEngine {
                 case "/":
                     if (b == 0) {
                         System.out.println("Error: Division by zero is not allowed.");
-                        return;
+                        return expression;
                     }
                     result = a / b;
                     break;
                 default:
                     System.out.println("Error: Unknown operator.");
-                    return;
+                    return expression;
             }
             // Render the result to the panel (console in this case)
             System.out.println("Result: " + result);
         }
+        return expression;
     }
 
     /**
@@ -90,7 +97,7 @@ public class CalculatorEngine {
     }
 }
 
-        // PSUEDOCODE CODE THINGYMABOBBER
+// PSUEDOCODE CODE THINGYMABOBBER
         /* for (parts){
             if first
                 if number

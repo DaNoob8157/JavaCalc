@@ -10,6 +10,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import static java.awt.SystemColor.text;
+
 /**
  * TODO
  *
@@ -136,6 +138,11 @@ public class CalculatorView extends JFrame {
     public void createAndShowGUI(){
         addComponentsToPane();
     }
+
+    public static void updateDisplay(String text) {
+        displayPane.setText(text);
+    }
+
 
     /* Main method to run and view boiler plate code */
     public static void main(String[] args) {

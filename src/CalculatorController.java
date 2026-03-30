@@ -79,10 +79,9 @@ public class CalculatorController {
 
                 case "=":
                     // TODO: Implement equals operation to evaluate expression
-
-
+                    String result = CalculatorEngine.evaluateExpression();
+                    CalculatorView.updateDisplay(result);
             }
-
 
         }
     }
