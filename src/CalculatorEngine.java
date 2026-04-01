@@ -29,7 +29,7 @@ public class CalculatorEngine {
         try {
             double a = Double.parseDouble(parts[0]);
             String operator = parts[1];
-            double result = 0;
+            double result;
 
             // Changes number to a negative
             if (operator.equals("+/-X")) {
