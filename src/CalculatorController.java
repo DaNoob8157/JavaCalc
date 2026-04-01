@@ -7,7 +7,6 @@
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,23 +66,51 @@ public class CalculatorController {
             // Track user input for calculation processing
             userInput.add(actionSource);
             System.out.println(userInput);
-            
+
             switch (actionSource) {
-                case "Exit":
-                    // Terminate the application
-                    System.exit(0);
-                    break;
 
                 case "+":
                     // TODO: Implement addition operation
+                    // add case a and b together
+                    CalculatorEngine.evaluateExpression("+");
+                    break;
+
+                case "-":
+                    // subtract case a and b
+                    CalculatorEngine.evaluateExpression("-");
+                    break;
+
+                case "/":
+                    // divide case a and b
+                    CalculatorEngine.evaluateExpression("/");
+                    break;
+
+                case "X":
+                    // multiply case a and b
+                    CalculatorEngine.evaluateExpression("X *");
+                    break;
+
+                case "+/-":
+                    // Get the current text properly
+                    String currentText = CalculatorView.displayPane.getText();
+                    if (currentText != null && !currentText.isEmpty() && !currentText.equals("0")) {
+                        if (currentText.startsWith("-")) {
+                            // Remove negative sign
+                            CalculatorView.updateDisplay(currentText.substring(1));
+                        } else {
+                            // Add negative sign
+                            CalculatorView.updateDisplay("-" + currentText);
+                        }
+                    }
+                    break;
 
                 case "=":
                     // TODO: Implement equals operation to evaluate expression
-                    String result = CalculatorEngine.evaluateExpression();
+                    String result = CalculatorEngine.evaluateExpression("=");
                     CalculatorView.updateDisplay(result);
-            }
+                    break;
 
+            }
         }
     }
-
 }

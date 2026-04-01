@@ -1,4 +1,4 @@
-import java.awt.*;
+import java.util.Arrays;
 
 /**
  * Class to implement functionality of calculator.
@@ -6,8 +6,6 @@ import java.awt.*;
  */
 
 public class CalculatorEngine {
-
-    public static Label evaluateExpression;
 
     public CalculatorEngine() {
         initGame();
@@ -17,83 +15,52 @@ public class CalculatorEngine {
 
     }
 
+    public static String evaluateExpression(String s) {
+        // Remove spaces for easier parsing
+        String expression = s.replaceAll("\\s+", "");
 
-    public static String evaluateExpression() {
-        String expression = "1+2";
-        String[] parts = expression.split("[+\\-/*]");
+        // Split by operators, keeping the operators in the array
+        String[] parts = expression.split("(?<=[+\\-/X=])|(?=[+\\-/X=])");
 
-        if (parts.length != 3) {
-            System.out.println("Error: Invalid expression format. Please use 'number operator number' format.");
-            return expression;
+        if (parts.length < 4 && !expression.contains("+/-X=")) {
+            return "Error: Invalid format, use: 'number' 'operator' 'number'";
         }
 
-        // Assign parts based on your logic
-        double a = 0;
-        double b = 0;
-        String operator = "";
-        boolean first = true;
-
-        for (String part : parts) {
-            if (first) {
-                // Check if the first part is a number
-                try {
-                    a = Double.parseDouble(part);
-                    first = false;
-                } catch (NumberFormatException e) {
-                    System.out.println("Error: The first part must be a number (because an operator is not good).");
-                    return expression;
-                }
-
-            } else if (isOperator(part)) {
-                operator = part;
-            } else {
-                // Assume the remaining part is a number
-                try {
-                    b = Double.parseDouble(part);
-                } catch (NumberFormatException e) {
-                    System.out.println("Error: Invalid number format for the second operand.");
-                    return expression;
-                }
-            }
-        }
-
-        // Perform the calculation and "render" to the console
-        if (!operator.isEmpty()) {
+        try {
+            double a = Double.parseDouble(parts[0]);
+            String operator = parts[1];
             double result = 0;
-            switch (operator) {
-                case "+":
-                    result = a + b;
-                    break;
-                case "-":
-                    result = a - b;
-                    break;
-                case "*":
-                    result = a * b;
-                    break;
-                case "/":
-                    if (b == 0) {
-                        System.out.println("Error: Division by zero is not allowed.");
-                        return expression;
-                    }
-                    result = a / b;
-                    break;
-                default:
-                    System.out.println("Error: Unknown operator.");
-                    return expression;
-            }
-            // Render the result to the panel (console in this case)
-            System.out.println("Result: " + result);
-        }
-        return expression;
-    }
 
-    /**
-     * Helper method to check if a string is a recognized operator.
-     * @param s The string to check.
-     * @return true if the string is an operator, false otherwise.
-     */
-    public static boolean isOperator(String s) {
-        return s.equals("+") || s.equals("-") || s.equals("*") || s.equals("/");
+            // Changes number to a negative
+            if (operator.equals("+/-X")) {
+                result = a * -1;
+            } else {
+                // operation functions
+                double b = Double.parseDouble(parts[2]);
+                switch (operator) {
+                    case "+":
+                        result = a + b;
+                        break;
+                    case "-":
+                        result = a - b;
+                        break;
+                    case "X":
+                    case "*":
+                        result = a * b;
+                        break;
+                    case "/":
+                        if (b == 0) return "Error: Division by zero";
+                        result = a / b;
+                        break;
+                    default:
+                        return "Error: Unknown operator " + operator;
+                }
+            }
+            return String.valueOf(result);
+
+        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+            return "Error: Invalid number format";
+        }
     }
 }
 

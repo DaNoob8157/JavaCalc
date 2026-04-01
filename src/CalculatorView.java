@@ -144,7 +144,6 @@ public class CalculatorView extends JFrame {
         displayPane.setText(text);
     }
 
-
     /* Main method to run and view boiler plate code */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
