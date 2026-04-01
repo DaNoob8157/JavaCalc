@@ -27,9 +27,8 @@ public class CalculatorView extends JFrame {
     private JPanel panel, btnPanel;
     static JTextPane displayPane;
     private JScrollPane scrollPane;
-    private String[] btnTextArray = {"THEME","DEL","AC","+/-","%","7","8","9","X",
+    private String[] btnTextArray = {"DEL","AC","+/-","%","7","8","9","X",
             "4","5","6","-","1","2","3","+",".","0","=", "/"};
-    private boolean isDarkMode = true;
 
     /**
      * Boilerplate constructor to create view
@@ -112,7 +111,7 @@ public class CalculatorView extends JFrame {
         gbc.weighty = 1.05;
 
         // Create button grid and add buttons
-        btnPanel = new JPanel(new GridLayout(5,4,0,0));
+        btnPanel = new JPanel(new GridLayout(5,5,0,0));
         btnPanel.setBackground(Color.BLACK);
         for (String text : btnTextArray) {
             JButton button = new JButton(text);
@@ -139,46 +138,6 @@ public class CalculatorView extends JFrame {
 
     public void createAndShowGUI(){
         addComponentsToPane();
-        updateTheme();
-    }
-
-    // Toggles between dark mode and light mode themes.
-    public void toggleTheme() {
-        isDarkMode = !isDarkMode;
-        updateTheme();
-    }
-
-    // Updates all UI components to match the current theme (dark or light mode). 
-    private void updateTheme() {
-        Color bgColor = isDarkMode ? Color.BLACK : Color.WHITE;
-        Color fgColor = isDarkMode ? Color.WHITE : Color.BLACK;
-        Color btnBgColor = isDarkMode ? new Color(50, 50, 50) : new Color(220, 220, 220);
-        Color specialBtnBgColor = isDarkMode ? new Color(80, 80, 80) : new Color(180, 180, 180);
-        Color borderColor = isDarkMode ? Color.BLACK : Color.LIGHT_GRAY;
-
-        panel.setBackground(bgColor);
-        displayPane.setBackground(bgColor);
-        displayPane.setForeground(fgColor);
-        displayPane.setCaretColor(fgColor);
-        scrollPane.getViewport().setBackground(bgColor);
-        
-        
-        if (btnPanel != null) {
-            btnPanel.setBackground(bgColor);
-            for (Component c : btnPanel.getComponents()) {
-                if (c instanceof JButton) {
-                    JButton button = (JButton) c;
-                    String text = button.getText();
-                    if (text.matches("[ACDEL+/\\-%X=]|THEME")) {
-                        button.setBackground(specialBtnBgColor);
-                    } else {
-                        button.setBackground(btnBgColor);
-                    }
-                    button.setForeground(fgColor);
-                    button.setBorder(BorderFactory.createLineBorder(borderColor));
-                }
-            }
-        }
     }
 
     public static void updateDisplay(String text) {

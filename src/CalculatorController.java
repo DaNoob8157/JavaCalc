@@ -42,7 +42,6 @@ public class CalculatorController {
          */
         @Override
         public void actionPerformed(ActionEvent e) {
-            SoundPlayer.playSound("button-click.mp3");
             String actionSource = e.getActionCommand();
 
             // Handle numeric input (0-9) and decimal point
@@ -59,9 +58,6 @@ public class CalculatorController {
                 if (!currentText.isEmpty()) {
                     CalculatorView.displayPane.setText(currentText.substring(0, currentText.length() - 1));
                 }
-            } else if (actionSource.equals("THEME")) {
-                // Theme Toggle - switch between light and dark mode
-                myView.toggleTheme();
             } else {
                 // Placeholder for other operations
                 System.out.println("Operation: " + actionSource);
