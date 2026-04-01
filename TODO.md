@@ -5,18 +5,8 @@
 |------|------|-----------------|
 | ☐    | Implement basic arithmetic operations (add, subtract, multiply, divide) | `@Phantom-StormX` |
 | ☐    | Add support for decimal numbers and floating-point calculations | `@Phantom-StormX` |
-| ☐    | Implement order of operations (PEMDAS/BODMAS) |                 |
 | ☐    | Add parentheses support for complex expressions |                 |
 | ☐    | Implement clear/reset functionality | `@Phantom-StormX` |
-
-## Advanced Operations
-| Done | Task | Assigned/Dibs |
-|------|------|-------------|
-| ☐ | Add trigonometric functions (sin, cos, tan) | |
-| ☐ | Implement power and square root operations | |
-| ☐ | Add percentage calculations | |
-| ☐ | Implement memory functions (M+, M-, MR, MC) | |
-| ☐ | Support for scientific notation | |
 
 ## UI/UX Improvements
 | Done | Task | Assigned/Dibs    |
