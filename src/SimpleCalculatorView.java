@@ -83,6 +83,7 @@ public class SimpleCalculatorView extends JPanel {
         add(btnPanel, gbc);
 
     }
+    //hello
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             SimpleCalculatorView simpleCalculatorView = new SimpleCalculatorView();
