@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
 import static java.awt.SystemColor.text;
 
 /**
@@ -21,7 +22,6 @@ import static java.awt.SystemColor.text;
  *
  * */
 public class CalculatorView extends JFrame {
-    //hola
 
     private ActionListener btnLstnr;
     private JPanel panel, btnPanel;
@@ -119,17 +119,17 @@ public class CalculatorView extends JFrame {
             if (btnLstnr != null) {
                 button.addActionListener(btnLstnr);
             }
-            
+
             button.setBackground(new Color(50, 50, 50));
             button.setForeground(Color.WHITE);
             button.setFocusPainted(false);
             button.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-            
+
             // Special color for operators and special buttons
             if (text.matches("[ACDEL+/\\-%X=]")) {
                 button.setBackground(new Color(80, 80, 80));
             }
-            
+
             btnPanel.add(button);
         }
         panel.add(btnPanel, gbc);
@@ -148,7 +148,7 @@ public class CalculatorView extends JFrame {
         updateTheme();
     }
 
-    // Updates all UI components to match the current theme (dark or light mode). 
+    // Updates all UI components to match the current theme (dark or light mode).
     private void updateTheme() {
         Color bgColor = isDarkMode ? Color.BLACK : Color.WHITE;
         Color fgColor = isDarkMode ? Color.WHITE : Color.BLACK;
@@ -161,8 +161,8 @@ public class CalculatorView extends JFrame {
         displayPane.setForeground(fgColor);
         displayPane.setCaretColor(fgColor);
         scrollPane.getViewport().setBackground(bgColor);
-        
-        
+
+
         if (btnPanel != null) {
             btnPanel.setBackground(bgColor);
             for (Component c : btnPanel.getComponents()) {
@@ -192,3 +192,4 @@ public class CalculatorView extends JFrame {
         });
     }
 }
+
