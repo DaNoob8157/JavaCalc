@@ -92,5 +92,6 @@ public class SimpleCalculatorView extends JPanel {
             test.setSize(600,400);
         });
     }
+
     }
 
