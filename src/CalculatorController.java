@@ -25,6 +25,7 @@ public class CalculatorController {
     private String secondNumber = "";
     private boolean operatorPressed = false;
     private boolean justCalculated = false;
+    private boolean operatorJustPressed = false;
 
     /**
      * Constructor initializes the calculator components and sets up listeners.
@@ -56,9 +57,10 @@ public class CalculatorController {
             if (actionSource.matches("[0-9.]")) {
                 String currentText = CalculatorView.displayPane.getText();
                 // If we just calculated, start fresh with this number
-                if (justCalculated) {
+                if (justCalculated || operatorJustPressed) {
                     CalculatorView.displayPane.setText(actionSource);
                     justCalculated = false;
+                    operatorJustPressed = false;
                 } else {
                     CalculatorView.displayPane.setText(currentText + actionSource);
                 }
@@ -81,7 +83,7 @@ public class CalculatorController {
                 myView.toggleTheme();
             } else if (actionSource.equals("=")) {
                 // Evaluate the complete expression when equals is pressed
-                if (!firstNumber.isEmpty() && !operator.isEmpty()) {
+                if (!firstNumber.isEmpty() && !operator.isEmpty() && !operatorJustPressed) {
                     secondNumber = CalculatorView.displayPane.getText();
                     if (!secondNumber.isEmpty()) {
                         // Build complete expression and evaluate
@@ -125,7 +127,8 @@ public class CalculatorController {
                     operator = "%";
                     operatorPressed = true;
                     justCalculated = false;
-                    CalculatorView.updateDisplay("");  // Clear display for next number
+                    CalculatorView.displayPane.setText(firstNumber + " " + actionSource + secondNumber);
+                    operatorJustPressed = true;  // Clear display for next number
                 }
                 // Case 2: If we just calculated and operator is pressed, use the result as first number
                 else if (justCalculated && !currentText.isEmpty()) {
@@ -133,16 +136,18 @@ public class CalculatorController {
                     operator = "%";
                     operatorPressed = true;
                     justCalculated = false;
-                    CalculatorView.displayPane.setText("");  // Clear display for second number
+                    CalculatorView.displayPane.setText(firstNumber + " " + actionSource + secondNumber);
+                    operatorJustPressed = true;  // Clear display for second number
                 }
                 // Case 3: Normal case - first number entered, no operator yet
                 else if (!currentText.isEmpty() && !operatorPressed) {
                     // Store the first number and operator
                     firstNumber = currentText;
-                    operator = "%";
+                    operator = actionSource;
                     operatorPressed = true;
                     justCalculated = false;
-                    CalculatorView.displayPane.setText("");  // Clear display for second number
+                    CalculatorView.displayPane.setText(firstNumber + " " + actionSource + secondNumber); // show it!
+                    operatorJustPressed = true; // Clear display for second number
                 }
             } else {
                 // Handle operators: +, -, /, X
@@ -160,7 +165,8 @@ public class CalculatorController {
                     operator = actionSource;
                     operatorPressed = true;
                     justCalculated = false;
-                    CalculatorView.updateDisplay("");  // Clear display for next number
+                    CalculatorView.displayPane.setText(firstNumber + " " + actionSource + secondNumber);
+                    operatorJustPressed = true;  // Clear display for next number
                 }
                 // Case 2: If we just calculated and operator is pressed, use the result as first number
                 else if (justCalculated && !currentText.isEmpty()) {
@@ -168,7 +174,8 @@ public class CalculatorController {
                     operator = actionSource;
                     operatorPressed = true;
                     justCalculated = false;
-                    CalculatorView.displayPane.setText("");  // Clear display for second number
+                    CalculatorView.displayPane.setText(firstNumber + " " + actionSource + secondNumber);
+                    operatorJustPressed = true;  // Clear display for second number
                 }
                 // Case 3: Normal case - first number entered, no operator yet
                 else if (!currentText.isEmpty() && !operatorPressed) {
@@ -177,7 +184,8 @@ public class CalculatorController {
                     operator = actionSource;
                     operatorPressed = true;
                     justCalculated = false;
-                    CalculatorView.displayPane.setText("");  // Clear display for second number
+                    CalculatorView.displayPane.setText(firstNumber + " " + actionSource + secondNumber);
+                    operatorJustPressed = true; // Clear display for second number
                 }
             }
 
