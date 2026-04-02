@@ -19,6 +19,13 @@ public class CalculatorController {
     CalculatorEngine myEngine;
     CustomListener myListener;
 
+    // Expression tracking for calculation
+    private String firstNumber = "";
+    private String operator = "";
+    private String secondNumber = "";
+    private boolean operatorPressed = false;
+    private boolean justCalculated = false;
+    private boolean operatorJustPressed = false;
 
     /**
      * Constructor initializes the calculator components and sets up listeners.
@@ -42,75 +49,149 @@ public class CalculatorController {
          */
         @Override
         public void actionPerformed(ActionEvent e) {
+            SoundPlayer.playSound("button-click.mp3");
             String actionSource = e.getActionCommand();
 
             // Handle numeric input (0-9) and decimal point
             // Append the digit or decimal point to the current display text
             if (actionSource.matches("[0-9.]")) {
                 String currentText = CalculatorView.displayPane.getText();
-                CalculatorView.displayPane.setText(currentText + actionSource);
+                // If we just calculated, start fresh with this number
+                if (justCalculated || operatorJustPressed) {
+                    CalculatorView.displayPane.setText(actionSource);
+                    justCalculated = false;
+                    operatorJustPressed = false;
+                } else {
+                    CalculatorView.displayPane.setText(currentText + actionSource);
+                }
             } else if (actionSource.equals("AC")) {
                 // All Clear - reset the display to empty string
                 CalculatorView.displayPane.setText("");
+                firstNumber = "";
+                operator = "";
+                secondNumber = "";
+                operatorPressed = false;
+                justCalculated = false;
             } else if (actionSource.equals("DEL")) {
                 // Delete - remove the last character from the display
                 String currentText = CalculatorView.displayPane.getText();
                 if (!currentText.isEmpty()) {
                     CalculatorView.displayPane.setText(currentText.substring(0, currentText.length() - 1));
                 }
+            } else if (actionSource.equals("THEME")) {
+                // Theme Toggle - switch between light and dark mode
+                myView.toggleTheme();
+            } else if (actionSource.equals("=")) {
+                // Evaluate the complete expression when equals is pressed
+                if (!firstNumber.isEmpty() && !operator.isEmpty() && !operatorJustPressed) {
+                    secondNumber = CalculatorView.displayPane.getText();
+                    if (!secondNumber.isEmpty()) {
+                        // Build complete expression and evaluate
+                        String expression = firstNumber + operator + secondNumber;
+                        String result = CalculatorEngine.evaluateExpression(expression);
+                        CalculatorView.updateDisplay(result);
+                        
+                        // Prepare for next calculation - the result becomes the first number
+                        firstNumber = result;
+                        operator = "";
+                        secondNumber = "";
+                        operatorPressed = false;
+                        justCalculated = true;  // Flag that we just calculated
+                    }
+                }
+            } else if (actionSource.equals("+/-")) {
+                // Toggle negative sign on current display
+                String currentText = CalculatorView.displayPane.getText();
+                if (currentText != null && !currentText.isEmpty() && !currentText.equals("0")) {
+                    if (currentText.startsWith("-")) {
+                        // Remove negative sign
+                        CalculatorView.updateDisplay(currentText.substring(1));
+                    } else {
+                        // Add negative sign
+                        CalculatorView.updateDisplay("-" + currentText);
+                    }
+                }
+            } else if (actionSource.equals("%")) {
+                // Modulo operation - convert to % operator
+                String currentText = CalculatorView.displayPane.getText();
+                
+                // Case 1: Operator pressed while a second number is already entered (chain calculation)
+                if (operatorPressed && !currentText.isEmpty()) {
+                    // Calculate the current operation first
+                    secondNumber = currentText;
+                    String expression = firstNumber + operator + secondNumber;
+                    String result = CalculatorEngine.evaluateExpression(expression);
+                    
+                    // Use result as first number for next operation
+                    firstNumber = result;
+                    operator = "%";
+                    operatorPressed = true;
+                    justCalculated = false;
+                    CalculatorView.displayPane.setText(firstNumber + " " + actionSource + secondNumber);
+                    operatorJustPressed = true;  // Clear display for next number
+                }
+                // Case 2: If we just calculated and operator is pressed, use the result as first number
+                else if (justCalculated && !currentText.isEmpty()) {
+                    firstNumber = currentText;
+                    operator = "%";
+                    operatorPressed = true;
+                    justCalculated = false;
+                    CalculatorView.displayPane.setText(firstNumber + " " + actionSource + secondNumber);
+                    operatorJustPressed = true;  // Clear display for second number
+                }
+                // Case 3: Normal case - first number entered, no operator yet
+                else if (!currentText.isEmpty() && !operatorPressed) {
+                    // Store the first number and operator
+                    firstNumber = currentText;
+                    operator = actionSource;
+                    operatorPressed = true;
+                    justCalculated = false;
+                    CalculatorView.displayPane.setText(firstNumber + " " + actionSource + secondNumber); // show it!
+                    operatorJustPressed = true; // Clear display for second number
+                }
             } else {
-                // Placeholder for other operations
-                System.out.println("Operation: " + actionSource);
+                // Handle operators: +, -, /, X
+                String currentText = CalculatorView.displayPane.getText();
+                
+                // Case 1: Operator pressed while a second number is already entered (chain calculation)
+                if (operatorPressed && !currentText.isEmpty()) {
+                    // Calculate the current operation first
+                    secondNumber = currentText;
+                    String expression = firstNumber + operator + secondNumber;
+                    String result = CalculatorEngine.evaluateExpression(expression);
+                    
+                    // Use result as first number for next operation
+                    firstNumber = result;
+                    operator = actionSource;
+                    operatorPressed = true;
+                    justCalculated = false;
+                    CalculatorView.displayPane.setText(firstNumber + " " + actionSource + secondNumber);
+                    operatorJustPressed = true;  // Clear display for next number
+                }
+                // Case 2: If we just calculated and operator is pressed, use the result as first number
+                else if (justCalculated && !currentText.isEmpty()) {
+                    firstNumber = currentText;
+                    operator = actionSource;
+                    operatorPressed = true;
+                    justCalculated = false;
+                    CalculatorView.displayPane.setText(firstNumber + " " + actionSource + secondNumber);
+                    operatorJustPressed = true;  // Clear display for second number
+                }
+                // Case 3: Normal case - first number entered, no operator yet
+                else if (!currentText.isEmpty() && !operatorPressed) {
+                    // Store the first number and operator
+                    firstNumber = currentText;
+                    operator = actionSource;
+                    operatorPressed = true;
+                    justCalculated = false;
+                    CalculatorView.displayPane.setText(firstNumber + " " + actionSource + secondNumber);
+                    operatorJustPressed = true; // Clear display for second number
+                }
             }
 
             // Track user input for calculation processing
             userInput.add(actionSource);
             System.out.println(userInput);
-
-            switch (actionSource) {
-
-                case "+":
-                    // TODO: Implement addition operation
-                    // add case a and b together
-                    CalculatorEngine.evaluateExpression("+");
-                    break;
-
-                case "-":
-                    // subtract case a and b
-                    CalculatorEngine.evaluateExpression("-");
-                    break;
-
-                case "/":
-                    // divide case a and b
-                    CalculatorEngine.evaluateExpression("/");
-                    break;
-
-                case "X":
-                    // multiply case a and b
-                    CalculatorEngine.evaluateExpression("X *");
-                    break;
-
-                case "+/-":
-                    // Get the current text properly
-                    String currentText = CalculatorView.displayPane.getText();
-                    if (currentText != null && !currentText.isEmpty() && !currentText.equals("0")) {
-                        if (currentText.startsWith("-")) {
-                            // Remove negative sign
-                            CalculatorView.updateDisplay(currentText.substring(1));
-                        } else {
-                            // Add negative sign
-                            CalculatorView.updateDisplay("-" + currentText);
-                        }
-                    }
-                    break;
-
-                case "=":
-                    // TODO: Implement equals operation to evaluate expression
-                    String result = CalculatorEngine.evaluateExpression("=");
-                    CalculatorView.updateDisplay(result);
-                    break;
-
-            }
         }
     }
 }
