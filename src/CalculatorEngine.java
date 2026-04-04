@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 /**
  * Class to implement functionality of calculator.
  *
@@ -19,20 +17,24 @@ public class CalculatorEngine {
         // Remove spaces for easier parsing
         String expression = s.replaceAll("\\s+", "");
 
-        // Split by operators, keeping the operators in the array
-        String[] parts = expression.split("(?<=[+\\-/X%])|(?=[+\\-/X%])");
-
-        if (parts.length < 3) {
+        int opIndex = -1; // only starts scanning for the operator at index 1, so a - on the first number cannot be mistaken for an operator
+        for (int i = 1; i < expression.length(); i++) {
+            char op = expression.charAt(i);
+            if (op == '+' || op == '-' || op == '/' || op == 'X' || op == '%') {
+                opIndex = i;
+                break;
+            }
+        }
+        if (opIndex == -1) {
             return "Error: Invalid format, use: 'number' 'operator' 'number'";
         }
-
+        String A = expression.substring(0, opIndex);
+        String operator = expression.substring(opIndex, opIndex + 1);
+        String B = expression.substring(opIndex + 1);
         try {
-            double a = Double.parseDouble(parts[0]);
-            String operator = parts[1];
+            double a = Double.parseDouble(A);
+            double b = Double.parseDouble(B);
             double result;
-
-            // operation functions
-            double b = Double.parseDouble(parts[2]);
             switch (operator) {
                 case "+":
                     result = a + b;
@@ -41,7 +43,6 @@ public class CalculatorEngine {
                     result = a - b;
                     break;
                 case "X":
-                case "*":
                     result = a * b;
                     break;
                 case "/":
@@ -53,11 +54,10 @@ public class CalculatorEngine {
                     result = a % b;
                     break;
                 default:
-                    return "Error: Unknown operator " + operator;
+                    return "Error: Unknown operator" + operator;
             }
             return String.valueOf(result);
-
-        } catch (NumberFormatException | ArrayIndexOutOfBoundsException e) {
+        } catch (NumberFormatException e) {
             return "Error: Invalid number format";
         }
     }

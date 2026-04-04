@@ -90,7 +90,7 @@ public class CalculatorController {
                         String expression = firstNumber + operator + secondNumber;
                         String result = CalculatorEngine.evaluateExpression(expression);
                         CalculatorView.updateDisplay(result);
-                        
+
                         // Prepare for next calculation - the result becomes the first number
                         firstNumber = result;
                         operator = "";
@@ -107,21 +107,30 @@ public class CalculatorController {
                         // Remove negative sign
                         CalculatorView.updateDisplay(currentText.substring(1));
                     } else {
-                        // Add negative sign
-                        CalculatorView.updateDisplay("-" + currentText);
+                        try {
+                            String text = CalculatorView.displayPane.getText().trim();
+                            if (!text.isEmpty()) {
+                                double val = Double.parseDouble(text);
+                                val = val * -1;
+                                CalculatorView.displayPane.setText(String.valueOf(val));
+                            }
+                        } catch (NumberFormatException n) {
+                            // Handle error (e.g., clear pane or show error)
+                            CalculatorView.displayPane.setText("error: negative sign");
+                        }
                     }
                 }
             } else if (actionSource.equals("%")) {
                 // Modulo operation - convert to % operator
                 String currentText = CalculatorView.displayPane.getText();
-                
+
                 // Case 1: Operator pressed while a second number is already entered (chain calculation)
                 if (operatorPressed && !currentText.isEmpty()) {
                     // Calculate the current operation first
                     secondNumber = currentText;
                     String expression = firstNumber + operator + secondNumber;
                     String result = CalculatorEngine.evaluateExpression(expression);
-                    
+
                     // Use result as first number for next operation
                     firstNumber = result;
                     operator = "%";
@@ -152,14 +161,14 @@ public class CalculatorController {
             } else {
                 // Handle operators: +, -, /, X
                 String currentText = CalculatorView.displayPane.getText();
-                
+
                 // Case 1: Operator pressed while a second number is already entered (chain calculation)
                 if (operatorPressed && !currentText.isEmpty()) {
                     // Calculate the current operation first
                     secondNumber = currentText;
                     String expression = firstNumber + operator + secondNumber;
                     String result = CalculatorEngine.evaluateExpression(expression);
-                    
+
                     // Use result as first number for next operation
                     firstNumber = result;
                     operator = actionSource;
