@@ -196,6 +196,9 @@ public class CalculatorController {
                     CalculatorView.displayPane.setText(firstNumber + " " + actionSource + secondNumber);
                     operatorJustPressed = true; // Clear display for second number
                 }
+                else if( actionSource.equals(".")){
+                    CalculatorView.displayPane.setText(".");
+                }
             }
 
             // Track user input for calculation processing
