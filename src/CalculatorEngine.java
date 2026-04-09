@@ -18,19 +18,21 @@ public class CalculatorEngine {
         String expression = s.replaceAll("\\s+", "");
 
         int opIndex = -1; // only starts scanning for the operator at index 1, so a - on the first number cannot be mistaken for an operator
-        for (int i = 1; i < expression.length(); i++) {
-            char op = expression.charAt(i);
-            if (op == '+' || op == '-' || op == '/' || op == 'X' || op == '%') {
-                opIndex = i;
+        for (int i = 1; i < expression.length(); i++) { // Assumes 'expression' is a String and 'opIndex' is an int
+            char op = expression.charAt(i); // Retrieves object at index i(which is 1)
+            if (op == '+' || op == '-' || op == '/' || op == 'X' || op == '%') {  // Checks if the object is an operator
+                opIndex = i; // Stores the index of the operator
                 break;
             }
         }
-        if (opIndex == -1) {
+        if (opIndex == -1) { // if the operator is first, the equation won't work
             return "Error: Invalid format, use: 'number' 'operator' 'number'";
         }
-        String A = expression.substring(0, opIndex);
-        String operator = expression.substring(opIndex, opIndex + 1);
-        String B = expression.substring(opIndex + 1);
+
+        String A = expression.substring(0, opIndex); // first part of the equation
+        String operator = expression.substring(opIndex, opIndex + 1); //second part of the equation, operator only
+        String B = expression.substring(opIndex + 1); // third part of the equation
+
         try {
             double a = Double.parseDouble(A);
             double b = Double.parseDouble(B);

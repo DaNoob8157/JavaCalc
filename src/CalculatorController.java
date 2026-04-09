@@ -39,7 +39,7 @@ public class CalculatorController {
         myView.setButtonListener(myListener);
     }
 
-    List<String> userInput = new ArrayList<>();
+    List<String> history = new ArrayList<>();
 
     private class CustomListener implements ActionListener {
         /**
@@ -199,11 +199,19 @@ public class CalculatorController {
                 else if( actionSource.equals(".")){
                     CalculatorView.displayPane.setText(".");
                 }
+
+                else if (actionSource.equals("EXIT")){
+                    System.exit(0);
+                }
+
+                else if (actionSource.equals("HIST")){
+
+                }
             }
 
             // Track user input for calculation processing
-            userInput.add(actionSource);
-            System.out.println(userInput);
+            history.add(actionSource);
+            System.out.println(history);
         }
     }
 }
