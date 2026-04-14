@@ -27,9 +27,10 @@ public class CalculatorView extends JFrame {
     private JPanel panel, btnPanel;
     static JTextPane displayPane;
     private JScrollPane scrollPane;
-    private String[] btnTextArray = {"THEME","DEL","AC","+/-","%","7","8","9","X",
-            "4","5","6","-","1","2","3","+",".","0","=", "/"};
+    private String[] btnTextArray = {"THEME","DEL","AC","HIST","=","1","2","3","4","X",
+            "5","6","7","8","/","9","0",".","-","+","+/-","%","CONVERT", "TIP", "EXIT"};
     private boolean isDarkMode = true;
+
 
     /**
      * Boilerplate constructor to create view
