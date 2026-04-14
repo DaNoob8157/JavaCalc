@@ -4,7 +4,7 @@ import java.awt.event.ActionListener;
 
 public class ConverterView extends JPanel {
 
-    String[] btnTextArray = {"1", "2", "3", "Meter", "Foot", "Centimeter", "Inches", "4", "5", "6", "Milimeter","Yard", "Miles", "Grams","7", "8", "9", "Kilogram", "pound","Ounces", "Liter", "0", ".", "=", "Gallon", "Mililiters","Fl Oz","°F","°C", "Second","Minute", "Hour", "Day", "Month", "Year" };
+    String[] btnTextArray = {"1", "2", "3", "Meter", "Foot", "Centimeter", "Inches", "4", "5", "6", "Milimeter","Yard", "Miles", "Grams","7", "8", "9", "Kilogram", "pound","Ounces", "Liter", "0", ".", "=", "Gallon", "Mililiters","Fl Oz","°F", "Second","Minute", "Hour", "Day", "Month", "Year","°C" };
     JTextPane displayPane = new JTextPane();
     JScrollPane scrollPane = new JScrollPane();
     JPanel btnPanel = new JPanel();
