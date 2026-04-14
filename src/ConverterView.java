@@ -2,16 +2,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-public class TipView extends JPanel {
+public class ConverterView extends JPanel {
 
-    String[] btnTextArray = {"1", "2", "3", "10%", "4", "5", "6", "15%", "7", "8", "9", "20%", "0", ".", "=", "25%"};
+    String[] btnTextArray = {"1", "2", "3", "Meter", "Foot", "Centimeter", "Inches", "4", "5", "6", "Milimeter","Yard", "Miles", "Grams","7", "8", "9", "Kilogram", "pound","Ounces", "Liter", "0", ".", "=", "Gallon", "Mililiters","Fl Oz","°F","°C", "Second","Minute", "Hour", "Day", "Month", "Year" };
     JTextPane displayPane = new JTextPane();
     JScrollPane scrollPane = new JScrollPane();
     JPanel btnPanel = new JPanel();
     ActionListener btnLstnr;
 
 
-    public TipView() {
+    public ConverterView() {
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
@@ -46,7 +46,7 @@ public class TipView extends JPanel {
         gbc.weightx = 1.0;
         gbc.weighty = 1.05;
 
-        btnPanel = new JPanel(new GridLayout(5, 5, 0, 0));
+        btnPanel = new JPanel(new GridLayout(5, 7, 0, 0));
 //        btnPanel.setBackground(Color.BLACK);
         for (String text : btnTextArray) {
             JButton button = new JButton(text);
@@ -105,8 +105,8 @@ public class TipView extends JPanel {
 //
 //        JPanel tipBtnPanel = new JPanel(new GridLayout(4,4,0,0));
 //        panel.add(tipBtnPanel, gbc);
-            
-            
+
+
 //        add(panel);
 //        add(scrollPane, gbc);
 //        add(one);
@@ -131,11 +131,12 @@ public class TipView extends JPanel {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            TipView tipView = new TipView();
+            ConverterView converterView = new ConverterView();
             JFrame test2 = new JFrame();
-            test2.add(tipView);
+            test2.add(converterView);
             test2.setVisible(true);
             test2.setSize(600, 400);
         });
     }
 }
+
