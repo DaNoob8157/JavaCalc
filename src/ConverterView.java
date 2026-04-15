@@ -30,7 +30,7 @@ public class ConverterView extends JPanel {
         scrollPane = new JScrollPane(displayPane);
         scrollPane.setBorder(null);
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.getViewport().setBackground(Color.BLACK);
+        scrollPane.getViewport().setBackground(CalcColors.DISPLAY_BACKGROUND);
 
         //create JLabel for spacing
         JLabel lblNewLabel = new JLabel();
@@ -55,7 +55,7 @@ public class ConverterView extends JPanel {
             }
 
             if (text.matches("[ACDEL+/\\-%X=]")) {
-                button.setBackground(new Color(80, 80, 80));
+                button.setBackground(CalcColors.OPERATOR_BUTTON_BACKGROUND);
             }
 
             btnPanel.add(button);

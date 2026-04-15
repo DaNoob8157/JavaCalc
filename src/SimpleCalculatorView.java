@@ -18,7 +18,7 @@ public class SimpleCalculatorView extends JPanel {
     private void addComponentsToPane(){
         // Create main panel to contain display & buttons
         setLayout(new GridBagLayout());
-        setBackground(Color.BLACK);
+        setBackground(CalcColors.BACKGROUND);
         GridBagConstraints gbc = new GridBagConstraints();
 
         /* === ROW 0: TEXT FIELD FOR CALCULATOR === */
@@ -34,20 +34,20 @@ public class SimpleCalculatorView extends JPanel {
         displayPane.setFont(new Font("Arial", Font.TRUETYPE_FONT, 40));
         displayPane.setEditable(false);
         displayPane.setOpaque(true);
-        displayPane.setBackground(Color.BLACK);
-        displayPane.setForeground(Color.WHITE);
-        displayPane.setCaretColor(Color.WHITE);
+        displayPane.setBackground(CalcColors.DISPLAY_BACKGROUND);
+        displayPane.setForeground(CalcColors.DISPLAY_TEXT);
+        displayPane.setCaretColor(CalcColors.DISPLAY_CARET);
 
         scrollPane = new JScrollPane(displayPane);
         scrollPane.setBorder(null);
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        scrollPane.getViewport().setBackground(Color.BLACK);
+        scrollPane.getViewport().setBackground(CalcColors.DISPLAY_BACKGROUND);
 
         add(scrollPane, gbc);
 
         // Create an empty label for spacing purposes
         JLabel lblNewLabel = new JLabel();
-        lblNewLabel.setBackground(Color.BLACK);
+        lblNewLabel.setBackground(CalcColors.BACKGROUND);
         lblNewLabel.setOpaque(true);
         add(lblNewLabel, gbc);
 
@@ -61,21 +61,21 @@ public class SimpleCalculatorView extends JPanel {
 
         // Create button grid and add buttons
         btnPanel = new JPanel(new GridLayout(5,4,0,0));
-        btnPanel.setBackground(Color.BLACK);
+        btnPanel.setBackground(CalcColors.BUTTON_PANEL_BACKGROUND);
         for (String text : btnTextArray) {
             JButton button = new JButton(text);
             if (btnLstnr != null) {
                 button.addActionListener(btnLstnr);
             }
 
-            button.setBackground(new Color(50, 50, 50));
-            button.setForeground(Color.WHITE);
+            button.setBackground(CalcColors.BUTTON_BACKGROUND);
+            button.setForeground(CalcColors.BUTTON_TEXT);
             button.setFocusPainted(false);
-            button.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+            button.setBorder(BorderFactory.createLineBorder(CalcColors.BUTTON_BORDER));
 
             // Special color for operators and special buttons
             if (text.matches("[ACDEL+/\\-%X=]")) {
-                button.setBackground(new Color(80, 80, 80));
+                button.setBackground(CalcColors.OPERATOR_BUTTON_BACKGROUND);
             }
 
             btnPanel.add(button);
