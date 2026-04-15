@@ -7,8 +7,8 @@ public class SimpleCalculatorView extends JPanel {
     private JPanel panel, btnPanel;
     static JTextPane displayPane;
     private JScrollPane scrollPane;
-    private String[] btnTextArray = {"THEME","DEL","AC","HIST","=","1","2","3","4","X",
-            "5","6","7","8","/","9","0",".","-","+","+/-","%","EXIT"};
+    private String[] btnTextArray = {"AC","DEL","%","+/-","THEME","1","2","3","/","CONVERT","4",
+            "5","6","X","HIST","7","8","9","-","TIP",".","0","=","+","EXIT"};
     private boolean isDarkMode = true;
 
     public SimpleCalculatorView (){
@@ -60,7 +60,7 @@ public class SimpleCalculatorView extends JPanel {
         gbc.weighty = 1.05;
 
         // Create button grid and add buttons
-        btnPanel = new JPanel(new GridLayout(4,5,0,0));
+        btnPanel = new JPanel(new GridLayout(5,4,0,0));
         btnPanel.setBackground(Color.BLACK);
         for (String text : btnTextArray) {
             JButton button = new JButton(text);
