@@ -73,13 +73,18 @@ This helps keep the interface organized and easier to resize or maintain.
 
 Some of the challenges in this project include:
 
-- 
+- Making the switch sign was hard to do because I (`@Phantom-StormX`) had to make it able to read the negative sign like it wasn't an operator.
+  - It gave me these two errors: `ArrayIndexOutOfBoundsException` and ` NumberFormatException` 
+    - `ArrayIndexOutOfBoundsException` fails on negatives because array indices must be non-negative integers 
+    - `NumberFormatException` often fails with negatives if the input string contains unexpected whitespace, non-numeric characters, or if it is trying to parse a decimal into an integer, causing input validation to fail.
+  - I fixed it by making sure that the start of the equation was 0, and 0 would either be a constant or a negative. 
+- Connecting the different calculators all onto one frame(or area) was difficult for `@Nunchuk-Tylor` because he had to add different layouts, and make it all connect.
 
 ## Future Improvements
 
 Possible improvements for future versions:
 
-- 
+- Allowing the entire operation to show rather than just the first constant and operator
 
 ## Button Sound Credit
 

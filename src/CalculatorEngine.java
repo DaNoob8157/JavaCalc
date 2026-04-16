@@ -117,4 +117,32 @@ public class CalculatorEngine {
         }
     }
 
+    public static double tipExpression(String tipPercentage) {
+        double tip;
+        double bill = 0;
+
+        switch (tipPercentage) {
+            case "10%":
+                tip = bill * 0.1;
+                break;
+            case "15%":
+                tip = bill * 0.15;
+                break;
+            case "20%":
+                tip = bill * 0.2;
+                break;
+            case "25%":
+                tip = bill * 0.25;
+                break;
+            case "50%":
+                tip = bill * 0.50;
+                break;
+            case "75%":
+                tip = bill * 0.75;
+                break;
+            default:
+                tip = bill; // Standard practice for default tip
+        }
+        return tip;
+    }
 }
