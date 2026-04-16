@@ -205,7 +205,8 @@ public class CalculatorController {
                 }
 
                 else if (actionSource.equals("HIST")){
-
+                    List<String> history = new ArrayList<>();
+                    CalculatorView.displayPane.setText(String.valueOf(history));
                 }
             }
 
