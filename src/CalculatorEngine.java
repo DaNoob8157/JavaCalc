@@ -63,4 +63,58 @@ public class CalculatorEngine {
             return "Error: Invalid number format";
         }
     }
+
+    public static double convertExpression(String targetUnit, double value, String inputUnit) {
+
+        // Normalizes input to a standard unit (EX: meters or feet)
+        double valueInMeters;
+
+        // Normalize input value to meters
+        switch (inputUnit.toLowerCase()) {
+            case "centimeter":
+                valueInMeters = value / 100.0;
+                break;
+
+            case "kilometer":
+                valueInMeters = value * 1000.0;
+                break;
+
+            case "meter":
+                valueInMeters = value;
+                break;
+
+            case "foot":
+                valueInMeters = value * 0.3048; // Standard conversion
+                break;
+
+            case "yard":
+                valueInMeters = value * 3;
+                break;
+
+            default:
+                throw new IllegalArgumentException("Unknown input unit: " + inputUnit);
+        }
+
+        // 2. Convert from meters to target unit
+        switch (targetUnit.toLowerCase()) {
+            case "centimeter":
+                return valueInMeters * 100.0;
+
+            case "kilometer":
+                return valueInMeters / 1000.0;
+
+            case "meter":
+                return valueInMeters;
+
+            case "foot":
+                return valueInMeters / 0.3048;
+
+            case "yard":
+                return valueInMeters / 3;
+
+            default:
+                throw new IllegalArgumentException("Unknown target unit: " + targetUnit);
+        }
+    }
+
 }
