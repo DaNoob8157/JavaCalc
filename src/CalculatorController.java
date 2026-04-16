@@ -7,6 +7,8 @@
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.SwingUtilities;
+import javax.swing.JTextPane;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +38,10 @@ public class CalculatorController {
         myView = new CalculatorView();
         myListener = new CustomListener();
 
-        myView.setButtonListener(myListener);
+        // Delay listener setup to ensure views are created
+        SwingUtilities.invokeLater(() -> {
+            myView.setButtonListener(myListener);
+        });
     }
 
     List<String> history = new ArrayList<>();
@@ -55,18 +60,22 @@ public class CalculatorController {
             // Handle numeric input (0-9) and decimal point
             // Append the digit or decimal point to the current display text
             if (actionSource.matches("[0-9.]")) {
-                String currentText = CalculatorView.displayPane.getText();
-                // If we just calculated, start fresh with this number
-                if (justCalculated || operatorJustPressed) {
-                    CalculatorView.displayPane.setText(actionSource);
-                    justCalculated = false;
-                    operatorJustPressed = false;
-                } else {
-                    CalculatorView.displayPane.setText(currentText + actionSource);
+                JTextPane pane = myView.getActiveDisplayPane();
+                if (pane != null) {
+                    String currentText = pane.getText();
+                    // If we just calculated, start fresh with this number
+                    if (justCalculated || operatorJustPressed) {
+                        pane.setText(actionSource);
+                        justCalculated = false;
+                        operatorJustPressed = false;
+                    } else {
+                        pane.setText(currentText + actionSource);
+                    }
                 }
             } else if (actionSource.equals("AC")) {
                 // All Clear - reset the display to empty string
-                CalculatorView.displayPane.setText("");
+                JTextPane pane = myView.getActiveDisplayPane();
+                if (pane != null) pane.setText("");
                 firstNumber = "";
                 operator = "";
                 secondNumber = "";
@@ -74,22 +83,26 @@ public class CalculatorController {
                 justCalculated = false;
             } else if (actionSource.equals("DEL")) {
                 // Delete - remove the last character from the display
-                String currentText = CalculatorView.displayPane.getText();
-                if (!currentText.isEmpty()) {
-                    CalculatorView.displayPane.setText(currentText.substring(0, currentText.length() - 1));
+                JTextPane pane = myView.getActiveDisplayPane();
+                if (pane != null) {
+                    String currentText = pane.getText();
+                    if (!currentText.isEmpty()) {
+                        pane.setText(currentText.substring(0, currentText.length() - 1));
+                    }
                 }
             } else if (actionSource.equals("THEME")) {
                 // Theme Toggle - switch between light and dark mode
                 myView.toggleTheme();
             } else if (actionSource.equals("=")) {
                 // Evaluate the complete expression when equals is pressed
-                if (!firstNumber.isEmpty() && !operator.isEmpty() && !operatorJustPressed) {
-                    secondNumber = CalculatorView.displayPane.getText();
+                JTextPane pane = myView.getActiveDisplayPane();
+                if (pane != null && !firstNumber.isEmpty() && !operator.isEmpty() && !operatorJustPressed) {
+                    secondNumber = pane.getText();
                     if (!secondNumber.isEmpty()) {
                         // Build complete expression and evaluate
                         String expression = firstNumber + operator + secondNumber;
                         String result = CalculatorEngine.evaluateExpression(expression);
-                        CalculatorView.updateDisplay(result);
+                        pane.setText(result);
 
                         // Prepare for next calculation - the result becomes the first number
                         firstNumber = result;
@@ -101,28 +114,32 @@ public class CalculatorController {
                 }
             } else if (actionSource.equals("+/-")) {
                 // Toggle negative sign on current display
-                String currentText = CalculatorView.displayPane.getText();
-                if (currentText != null && !currentText.isEmpty() && !currentText.equals("0")) {
-                    if (currentText.startsWith("-")) {
-                        // Remove negative sign
-                        CalculatorView.updateDisplay(currentText.substring(1));
-                    } else {
-                        try {
-                            String text = CalculatorView.displayPane.getText().trim();
-                            if (!text.isEmpty()) {
-                                double val = Double.parseDouble(text);
-                                val = val * -1;
-                                CalculatorView.displayPane.setText(String.valueOf(val));
+                JTextPane pane = myView.getActiveDisplayPane();
+                if (pane != null) {
+                    String currentText = pane.getText();
+                    if (currentText != null && !currentText.isEmpty() && !currentText.equals("0")) {
+                        if (currentText.startsWith("-")) {
+                            // Remove negative sign
+                            pane.setText(currentText.substring(1));
+                        } else {
+                            try {
+                                String text = pane.getText().trim();
+                                if (!text.isEmpty()) {
+                                    double val = Double.parseDouble(text);
+                                    val = val * -1;
+                                    pane.setText(String.valueOf(val));
+                                }
+                            } catch (NumberFormatException n) {
+                                // Handle error (e.g., clear pane or show error)
+                                pane.setText("error: negative sign");
                             }
-                        } catch (NumberFormatException n) {
-                            // Handle error (e.g., clear pane or show error)
-                            CalculatorView.displayPane.setText("error: negative sign");
                         }
                     }
                 }
             } else if (actionSource.equals("%")) {
                 // Modulo operation - convert to % operator
-                String currentText = CalculatorView.displayPane.getText();
+                JTextPane pane = myView.getActiveDisplayPane();
+                String currentText = pane != null ? pane.getText() : "";
 
                 // Case 1: Operator pressed while a second number is already entered (chain calculation)
                 if (operatorPressed && !currentText.isEmpty()) {
@@ -136,7 +153,7 @@ public class CalculatorController {
                     operator = "%";
                     operatorPressed = true;
                     justCalculated = false;
-                    CalculatorView.displayPane.setText(firstNumber + " " + actionSource + secondNumber);
+                    if (pane != null) pane.setText(firstNumber + " " + actionSource + secondNumber);
                     operatorJustPressed = true;  // Clear display for next number
                 }
                 // Case 2: If we just calculated and operator is pressed, use the result as first number
@@ -145,7 +162,7 @@ public class CalculatorController {
                     operator = "%";
                     operatorPressed = true;
                     justCalculated = false;
-                    CalculatorView.displayPane.setText(firstNumber + " " + actionSource + secondNumber);
+                    if (pane != null) pane.setText(firstNumber + " " + actionSource + secondNumber);
                     operatorJustPressed = true;  // Clear display for second number
                 }
                 // Case 3: Normal case - first number entered, no operator yet
@@ -155,12 +172,13 @@ public class CalculatorController {
                     operator = actionSource;
                     operatorPressed = true;
                     justCalculated = false;
-                    CalculatorView.displayPane.setText(firstNumber + " " + actionSource + secondNumber); // show it!
+                    if (pane != null) pane.setText(firstNumber + " " + actionSource + secondNumber); // show it!
                     operatorJustPressed = true; // Clear display for second number
                 }
             } else {
                 // Handle operators: +, -, /, X
-                String currentText = CalculatorView.displayPane.getText();
+                JTextPane pane = myView.getActiveDisplayPane();
+                String currentText = pane != null ? pane.getText() : "";
 
                 // Case 1: Operator pressed while a second number is already entered (chain calculation)
                 if (operatorPressed && !currentText.isEmpty()) {
@@ -174,7 +192,7 @@ public class CalculatorController {
                     operator = actionSource;
                     operatorPressed = true;
                     justCalculated = false;
-                    CalculatorView.displayPane.setText(firstNumber + " " + actionSource + secondNumber);
+                    if (pane != null) pane.setText(firstNumber + " " + actionSource + secondNumber);
                     operatorJustPressed = true;  // Clear display for next number
                 }
                 // Case 2: If we just calculated and operator is pressed, use the result as first number
@@ -183,7 +201,7 @@ public class CalculatorController {
                     operator = actionSource;
                     operatorPressed = true;
                     justCalculated = false;
-                    CalculatorView.displayPane.setText(firstNumber + " " + actionSource + secondNumber);
+                    if (pane != null) pane.setText(firstNumber + " " + actionSource + secondNumber);
                     operatorJustPressed = true;  // Clear display for second number
                 }
                 // Case 3: Normal case - first number entered, no operator yet
@@ -193,20 +211,32 @@ public class CalculatorController {
                     operator = actionSource;
                     operatorPressed = true;
                     justCalculated = false;
-                    CalculatorView.displayPane.setText(firstNumber + " " + actionSource + secondNumber);
+                    if (pane != null) pane.setText(firstNumber + " " + actionSource + secondNumber);
                     operatorJustPressed = true; // Clear display for second number
                 }
                 else if( actionSource.equals(".")){
-                    CalculatorView.displayPane.setText(".");
+                    if (pane != null) pane.setText(".");
+                }
+                
+                else if (actionSource.equals("CONVERT")) {
+                    myView.showConverter();
+                }
+                
+                else if (actionSource.equals("TIP")) {
+                    myView.showTipCalculator();
                 }
 
                 else if (actionSource.equals("EXIT")){
                     System.exit(0);
                 }
 
+                // Handle history button - show calculation history in display
                 else if (actionSource.equals("HIST")){
-                    List<String> history = new ArrayList<>();
-                    CalculatorView.displayPane.setText(String.valueOf(history));
+                    JTextPane pane2 = myView.getActiveDisplayPane();
+                    if (pane2 != null) {
+                        List<String> hist = new ArrayList<>();
+                        pane2.setText(String.valueOf(hist));
+                    }
                 }
             }
 

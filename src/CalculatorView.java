@@ -24,13 +24,20 @@ import static java.awt.SystemColor.text;
 public class CalculatorView extends JFrame {
 
     private ActionListener btnLstnr;
-    private JPanel panel, btnPanel;
+    private JPanel cardPanel;
+    private CardLayout cardLayout;
     static JTextPane displayPane;
-    private JScrollPane scrollPane;
-    private String[] btnTextArray = {"THEME","DEL","AC","HIST","=","1","2","3","4","X",
-            "5","6","7","8","/","9","0",".","-","+","+/-","%","CONVERT", "TIP", "EXIT"};
     private boolean isDarkMode = true;
-    private LayoutManager CardLayout;
+    
+    // Card names
+    public static final String SIMPLE_CALC = "SimpleCalc";
+    public static final String TIP_VIEW = "TipView";
+    public static final String CONVERTER_VIEW = "ConverterView";
+    
+    // View references
+    private SimpleCalculatorView simpleCalcView;
+    private TipView tipView;
+    private ConverterView converterView;
 
 
     /**
@@ -39,14 +46,15 @@ public class CalculatorView extends JFrame {
 
     public CalculatorView() {
 
-        SwingUtilities.invokeLater(() -> {
-            createAndShowGUI();
-        });
-
         setTitle("Calculator");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setVisible(true);
         setSize(500, 520);
+        
+        // Ensure GUI creation and updates happen on the Event Dispatch Thread for thread safety
+        SwingUtilities.invokeLater(() -> {
+            createAndShowGUI();
+            setVisible(true);
+        });
 
     }
 
@@ -61,17 +69,55 @@ public class CalculatorView extends JFrame {
 
     public void setButtonListener(ActionListener lstnr){
         btnLstnr = lstnr;
-        if (btnPanel != null) {
-            for (Component c : btnPanel.getComponents()) {
-                if (c instanceof JButton) {
-                    ((JButton) c).addActionListener(btnLstnr);
-                }
+        // Add listener to all cards - use SwingUtilities to ensure thread safety
+        SwingUtilities.invokeLater(() -> {
+            if (simpleCalcView != null) {
+                simpleCalcView.setButtonListener(lstnr);
             }
+            if (tipView != null) {
+                tipView.setButtonListener(lstnr);
+            }
+            if (converterView != null) {
+                converterView.setButtonListener(lstnr);
+            }
+        });
+    }
+    
+    // Get the display pane from the currently active view
+    public JTextPane getActiveDisplayPane() {
+        if (simpleCalcView != null && simpleCalcView.isVisible()) {
+            return simpleCalcView.getDisplayPane();
+        } else if (tipView != null && tipView.isVisible()) {
+            return tipView.getDisplayPane();
+        } else if (converterView != null && converterView.isVisible()) {
+            return converterView.getDisplayPane();
         }
+        // Default to simple calc view if nothing is visible
+        return simpleCalcView != null ? simpleCalcView.getDisplayPane() : null;
     }
 
 
     public void createAndShowGUI(){
+        // Initialize CardLayout
+        cardLayout = new CardLayout();
+        cardPanel = new JPanel(cardLayout);
+        
+        // Create view cards
+        simpleCalcView = new SimpleCalculatorView();
+        tipView = new TipView();
+        converterView = new ConverterView();
+        
+        // Add cards to card panel
+        cardPanel.add(simpleCalcView, SIMPLE_CALC);
+        cardPanel.add(tipView, TIP_VIEW);
+        cardPanel.add(converterView, CONVERTER_VIEW);
+        
+        // Set the card panel as the main content pane
+        this.setContentPane(cardPanel);
+        
+        // Show the simple calculator view by default
+        cardLayout.show(cardPanel, SIMPLE_CALC);
+        
         updateTheme();
     }
 
@@ -85,33 +131,32 @@ public class CalculatorView extends JFrame {
     private void updateTheme() {
         Color bgColor = isDarkMode ? Color.BLACK : Color.WHITE;
         Color fgColor = isDarkMode ? Color.WHITE : Color.BLACK;
-        Color btnBgColor = isDarkMode ? new Color(50, 50, 50) : new Color(220, 220, 220);
-        Color specialBtnBgColor = isDarkMode ? new Color(80, 80, 80) : new Color(180, 180, 180);
-        Color borderColor = isDarkMode ? Color.BLACK : Color.LIGHT_GRAY;
-
-        panel.setBackground(bgColor);
-        displayPane.setBackground(bgColor);
-        displayPane.setForeground(fgColor);
-        displayPane.setCaretColor(fgColor);
-        scrollPane.getViewport().setBackground(bgColor);
-
-
-        if (btnPanel != null) {
-            btnPanel.setBackground(bgColor);
-            for (Component c : btnPanel.getComponents()) {
-                if (c instanceof JButton) {
-                    JButton button = (JButton) c;
-                    String text = button.getText();
-                    if (text.matches("[ACDEL+/\\-%X=]|THEME")) {
-                        button.setBackground(specialBtnBgColor);
-                    } else {
-                        button.setBackground(btnBgColor);
-                    }
-                    button.setForeground(fgColor);
-                    button.setBorder(BorderFactory.createLineBorder(borderColor));
-                }
-            }
+        
+        // Apply theme to all cards
+        if (simpleCalcView != null) {
+            simpleCalcView.applyTheme(isDarkMode);
         }
+        if (tipView != null) {
+            tipView.applyTheme(isDarkMode);
+        }
+        if (converterView != null) {
+            converterView.applyTheme(isDarkMode);
+        }
+        
+        cardPanel.setBackground(bgColor);
+    }
+    
+    // Methods to switch between views
+    public void showSimpleCalculator() {
+        cardLayout.show(cardPanel, SIMPLE_CALC);
+    }
+    
+    public void showTipCalculator() {
+        cardLayout.show(cardPanel, TIP_VIEW);
+    }
+    
+    public void showConverter() {
+        cardLayout.show(cardPanel, CONVERTER_VIEW);
     }
 
     public static void updateDisplay(String text) {
