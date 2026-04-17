@@ -4,24 +4,17 @@
 //
 //  Created by DaNoob8157 on 03/19/26
 //
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.SwingUtilities;
 import javax.swing.JTextPane;
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- * Controller class for the calculator application.
- * Manages interaction between the view and engine components.
- */
 public class CalculatorController {
+
     CalculatorView myView;
     CalculatorEngine myEngine;
     CustomListener myListener;
-
-    // Expression tracking for calculation
     private String firstNumber = "";
     private String operator = "";
     private String secondNumber = "";
@@ -29,41 +22,25 @@ public class CalculatorController {
     private boolean justCalculated = false;
     private boolean operatorJustPressed = false;
 
-    /**
-     * Constructor initializes the calculator components and sets up listeners.
-     */
     public CalculatorController() {
-
         myEngine = new CalculatorEngine();
         myView = new CalculatorView();
         myListener = new CustomListener();
-
-        // Delay listener setup to ensure views are created
         SwingUtilities.invokeLater(() -> {
             myView.setButtonListener(myListener);
         });
     }
-
     List<String> history = new ArrayList<>();
 
     private class CustomListener implements ActionListener {
-        /**
-         * Invoked when an action occurs.
-         *
-         * @param e the event to be processed
-         */
         @Override
         public void actionPerformed(ActionEvent e) {
             SoundPlayer.playSound("button-click.mp3");
             String actionSource = e.getActionCommand();
-
-            // Handle numeric input (0-9) and decimal point
-            // Append the digit or decimal point to the current display text
             if (actionSource.matches("[0-9.]")) {
                 JTextPane pane = myView.getActiveDisplayPane();
                 if (pane != null) {
                     String currentText = pane.getText();
-                    // If we just calculated, start fresh with this number
                     if (justCalculated || operatorJustPressed) {
                         pane.setText(actionSource);
                         justCalculated = false;
@@ -73,7 +50,6 @@ public class CalculatorController {
                     }
                 }
             } else if (actionSource.equals("AC")) {
-                // All Clear - reset the display to empty string
                 JTextPane pane = myView.getActiveDisplayPane();
                 if (pane != null) pane.setText("");
                 firstNumber = "";
@@ -81,8 +57,8 @@ public class CalculatorController {
                 secondNumber = "";
                 operatorPressed = false;
                 justCalculated = false;
+                operatorJustPressed = false;
             } else if (actionSource.equals("DEL")) {
-                // Delete - remove the last character from the display
                 JTextPane pane = myView.getActiveDisplayPane();
                 if (pane != null) {
                     String currentText = pane.getText();
@@ -91,156 +67,118 @@ public class CalculatorController {
                     }
                 }
             } else if (actionSource.equals("THEME")) {
-                // Theme Toggle - switch between light and dark mode
                 myView.toggleTheme();
             } else if (actionSource.equals("=")) {
-                // Evaluate the complete expression when equals is pressed
                 JTextPane pane = myView.getActiveDisplayPane();
                 if (pane != null && !firstNumber.isEmpty() && !operator.isEmpty() && !operatorJustPressed) {
                     secondNumber = pane.getText();
                     if (!secondNumber.isEmpty()) {
-                        // Build complete expression and evaluate
                         String expression = firstNumber + operator + secondNumber;
                         String result = CalculatorEngine.evaluateExpression(expression);
+                        // Save full expression to history before overwriting
+                        history.add(firstNumber + " " + operator + " " + secondNumber + " = " + result);
                         pane.setText(result);
-
-                        // Prepare for next calculation - the result becomes the first number
                         firstNumber = result;
                         operator = "";
                         secondNumber = "";
                         operatorPressed = false;
-                        justCalculated = true;  // Flag that we just calculated
+                        justCalculated = true;
                     }
                 }
+                history.add(actionSource);
+                System.out.println(history);
+                return; // already added to history above
             } else if (actionSource.equals("+/-")) {
-                // Toggle negative sign on current display
                 JTextPane pane = myView.getActiveDisplayPane();
                 if (pane != null) {
                     String currentText = pane.getText();
                     if (currentText != null && !currentText.isEmpty() && !currentText.equals("0")) {
                         if (currentText.startsWith("-")) {
-                            // Remove negative sign
                             pane.setText(currentText.substring(1));
                         } else {
                             try {
-                                String text = pane.getText().trim();
-                                if (!text.isEmpty()) {
-                                    double val = Double.parseDouble(text);
-                                    val = val * -1;
-                                    pane.setText(String.valueOf(val));
-                                }
+                                double val = Double.parseDouble(currentText.trim());
+                                pane.setText(String.valueOf(val * -1));
                             } catch (NumberFormatException n) {
-                                // Handle error (e.g., clear pane or show error)
                                 pane.setText("error: negative sign");
                             }
                         }
                     }
                 }
             } else if (actionSource.equals("%")) {
-                // Modulo operation - convert to % operator
                 JTextPane pane = myView.getActiveDisplayPane();
-                String currentText = pane != null ? pane.getText() : "";
-
-                // Case 1: Operator pressed while a second number is already entered (chain calculation)
-                if (operatorPressed && !currentText.isEmpty()) {
-                    // Calculate the current operation first
-                    secondNumber = currentText;
-                    String expression = firstNumber + operator + secondNumber;
-                    String result = CalculatorEngine.evaluateExpression(expression);
-
-                    // Use result as first number for next operation
+                String currenDisplay = pane != null ? pane.getText() : "";
+                if (operatorPressed && !currenDisplay.isEmpty()) {
+                    secondNumber = currenDisplay;
+                    String result = CalculatorEngine.evaluateExpression(firstNumber + operator + secondNumber);
                     firstNumber = result;
                     operator = "%";
                     operatorPressed = true;
                     justCalculated = false;
-                    if (pane != null) pane.setText(firstNumber + " " + actionSource + secondNumber);
-                    operatorJustPressed = true;  // Clear display for next number
-                }
-                // Case 2: If we just calculated and operator is pressed, use the result as first number
-                else if (justCalculated && !currentText.isEmpty()) {
-                    firstNumber = currentText;
+                    if (pane != null) pane.setText(firstNumber + " %");
+                    operatorJustPressed = true;
+                } else if (justCalculated && !currenDisplay.isEmpty()) {
+                    firstNumber = currenDisplay;
                     operator = "%";
                     operatorPressed = true;
                     justCalculated = false;
-                    if (pane != null) pane.setText(firstNumber + " " + actionSource + secondNumber);
-                    operatorJustPressed = true;  // Clear display for second number
-                }
-                // Case 3: Normal case - first number entered, no operator yet
-                else if (!currentText.isEmpty() && !operatorPressed) {
-                    // Store the first number and operator
-                    firstNumber = currentText;
-                    operator = actionSource;
+                    if (pane != null) pane.setText(firstNumber + " %");
+                    operatorJustPressed = true;
+                } else if (!currenDisplay.isEmpty() && !operatorPressed) {
+                    firstNumber = currenDisplay;
+                    operator = "%";
                     operatorPressed = true;
                     justCalculated = false;
-                    if (pane != null) pane.setText(firstNumber + " " + actionSource + secondNumber); // show it!
-                    operatorJustPressed = true; // Clear display for second number
+                    if (pane != null) pane.setText(firstNumber + " %");
+                    operatorJustPressed = true;
                 }
-            } else {
-                // Handle operators: +, -, /, X
+            } else if (actionSource.equals(".")) {
                 JTextPane pane = myView.getActiveDisplayPane();
-                String currentText = pane != null ? pane.getText() : "";
-
-                // Case 1: Operator pressed while a second number is already entered (chain calculation)
-                if (operatorPressed && !currentText.isEmpty()) {
-                    // Calculate the current operation first
-                    secondNumber = currentText;
-                    String expression = firstNumber + operator + secondNumber;
-                    String result = CalculatorEngine.evaluateExpression(expression);
-
-                    // Use result as first number for next operation
-                    firstNumber = result;
-                    operator = actionSource;
-                    operatorPressed = true;
-                    justCalculated = false;
-                    if (pane != null) pane.setText(firstNumber + " " + actionSource + secondNumber);
-                    operatorJustPressed = true;  // Clear display for next number
-                }
-                // Case 2: If we just calculated and operator is pressed, use the result as first number
-                else if (justCalculated && !currentText.isEmpty()) {
-                    firstNumber = currentText;
-                    operator = actionSource;
-                    operatorPressed = true;
-                    justCalculated = false;
-                    if (pane != null) pane.setText(firstNumber + " " + actionSource + secondNumber);
-                    operatorJustPressed = true;  // Clear display for second number
-                }
-                // Case 3: Normal case - first number entered, no operator yet
-                else if (!currentText.isEmpty() && !operatorPressed) {
-                    // Store the first number and operator
-                    firstNumber = currentText;
-                    operator = actionSource;
-                    operatorPressed = true;
-                    justCalculated = false;
-                    if (pane != null) pane.setText(firstNumber + " " + actionSource + secondNumber);
-                    operatorJustPressed = true; // Clear display for second number
-                }
-                else if( actionSource.equals(".")){
-                    if (pane != null) pane.setText(".");
-                }
-                
-                else if (actionSource.equals("CONVERT")) {
-                    myView.showConverter();
-                }
-                
-                else if (actionSource.equals("TIP")) {
-                    myView.showTipCalculator();
-                }
-
-                else if (actionSource.equals("EXIT")){
-                    System.exit(0);
-                }
-
-                // Handle history button - show calculation history in display
-                else if (actionSource.equals("HIST")){
-                    JTextPane pane2 = myView.getActiveDisplayPane();
-                    if (pane2 != null) {
-                        List<String> hist = new ArrayList<>();
-                        pane2.setText(String.valueOf(hist));
+                if (pane != null) pane.setText(".");
+            } else if (actionSource.equals("CONVERT")) {
+                myView.showConverter();
+            } else if (actionSource.equals("TIP")) {
+                myView.showTipCalculator();
+            } else if (actionSource.equals("EXIT")) {
+                System.exit(0);
+            } else if (actionSource.equals("HIST")) {
+                JTextPane pane = myView.getActiveDisplayPane();
+                if (pane != null) {
+                    if (history.isEmpty()) {
+                        pane.setText("No history yet");
+                    } else {
+                        pane.setText(String.join("\n", history));
                     }
                 }
+            } else {
+                // Operators only: +, -, /, X
+                JTextPane pane = myView.getActiveDisplayPane();
+                String currentText = pane != null ? pane.getText() : "";
+                if (operatorPressed && !currentText.isEmpty()) {
+                    secondNumber = currentText;
+                    String result = CalculatorEngine.evaluateExpression(firstNumber + operator + secondNumber);
+                    firstNumber = result;
+                    operator = actionSource;
+                    operatorPressed = true;
+                    justCalculated = false;
+                    if (pane != null) pane.setText(firstNumber + " " + actionSource);
+                    operatorJustPressed = true;
+                } else if (justCalculated && !currentText.isEmpty()) {
+                    firstNumber = currentText;
+                    operator = actionSource;
+                    operatorPressed = true;
+                    justCalculated = false;
+                    if (pane != null) pane.setText(firstNumber + " " + actionSource);
+                    operatorJustPressed = true;
+                } else if (!currentText.isEmpty() && !operatorPressed) {
+                    firstNumber = currentText;
+                    operator = actionSource;
+                    operatorPressed = true;
+                    justCalculated = false;
+                    if (pane != null) pane.setText(firstNumber + " " + actionSource);
+                    operatorJustPressed = true;
+                }
             }
-
-            // Track user input for calculation processing
             history.add(actionSource);
             System.out.println(history);
         }
