@@ -117,9 +117,8 @@ public class CalculatorEngine {
         }
     }
 
-    public static double tipExpression(String tipPercentage) {
+    public static double tipExpression(String tipPercentage, double bill) {
         double tip;
-        double bill = 0;
 
         switch (tipPercentage) {
             case "10%":
@@ -134,14 +133,15 @@ public class CalculatorEngine {
             case "25%":
                 tip = bill * 0.25;
                 break;
-            case "50%":
-                tip = bill * 0.50;
-                break;
-            case "75%":
-                tip = bill * 0.75;
-                break;
             default:
-                tip = bill; // Standard practice for default tip
+                // Handles any custom percentage ex "18%" or "18"
+                try {
+                    double custom = Double.parseDouble(tipPercentage.replace("%", ""));
+                    tip = bill * (custom / 100.0);
+                } catch (NumberFormatException e) {
+                    tip = 0;
+                }
+                break;
         }
         return tip;
     }
