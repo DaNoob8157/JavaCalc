@@ -30,6 +30,7 @@ public class CalculatorController {
             myView.setButtonListener(myListener);
         });
     }
+
     List<String> history = new ArrayList<>();
 
     private class CustomListener implements ActionListener {
