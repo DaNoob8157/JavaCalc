@@ -26,7 +26,7 @@ public class TipView extends JPanel {
         displayPane = new JTextPane();
         displayPane.setFont(new Font("Arial", Font.TRUETYPE_FONT, 40));
         displayPane.setEditable(false);
-//       4
+//
 
         scrollPane = new JScrollPane(displayPane);
         scrollPane.setBorder(null);
@@ -35,8 +35,8 @@ public class TipView extends JPanel {
 
         //create JLabel for spacing
         JLabel lblNewLabel = new JLabel();
-//        lblNewLabel.setBackground(Color.BLACK);
-//        lblNewLabel.setOpaque(true);
+        lblNewLabel.setBackground(Color.BLACK);
+        lblNewLabel.setOpaque(true);
         add(lblNewLabel, gbc);
 
         /* === ROW 2: Button Pad === */
@@ -47,7 +47,7 @@ public class TipView extends JPanel {
         gbc.weightx = 1.0;
         gbc.weighty = 1.05;
 
-        btnPanel = new JPanel(new GridLayout(5, 5, 0, 0));
+        btnPanel = new JPanel(new GridLayout(4, 4, 0, 0));
         buttons = new JButton[btnTextArray.length];
         int index = 0;
 //        btnPanel.setBackground(Color.BLACK);
