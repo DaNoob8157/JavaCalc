@@ -226,6 +226,10 @@ public class CalculatorController {
                     myView.showTipCalculator();
                 }
 
+                else if (actionSource.equals("SIMPLE")) {
+                    myView.showSimpleCalculator();
+                }
+
                 else if (actionSource.equals("EXIT")){
                     System.exit(0);
                 }

@@ -4,7 +4,7 @@ import java.awt.event.ActionListener;
 
 public class TipView extends JPanel {
 
-    String[] btnTextArray = {"1", "2", "3", "10%","Simple", "4", "5", "6", "15%","Convert", "7", "8", "9", "20%","HIST", "0", ".", "=", "25%","Num of Peeps"};
+    String[] btnTextArray = {"1", "2", "3", "10%","SIMPLE", "4", "5", "6", "15%","CONVERT", "7", "8", "9", "20%","HIST", "0", ".", "=", "25%","Num of Peeps"};
     JTextPane displayPane = new JTextPane();
     JScrollPane scrollPane = new JScrollPane();
     JPanel btnPanel = new JPanel();
