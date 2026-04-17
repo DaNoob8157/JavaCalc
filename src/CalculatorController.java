@@ -50,6 +50,7 @@ public class CalculatorController {
                         pane.setText(currentText + actionSource);
                     }
                 }
+
             } else if (actionSource.equals("AC")) {
                 JTextPane pane = myView.getActiveDisplayPane();
                 if (pane != null) pane.setText("");
