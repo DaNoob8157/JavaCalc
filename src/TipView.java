@@ -4,7 +4,7 @@ import java.awt.event.ActionListener;
 
 public class TipView extends JPanel {
 
-    String[] btnTextArray = {"1", "2", "3", "10%", "4", "5", "6", "15%", "7", "8", "9", "20%", "0", ".", "=", "25%"};
+    String[] btnTextArray = {"1", "2", "3", "10%","SIMPLE", "4", "5", "6", "15%","CONVERT", "7", "8", "9", "20%","HIST", "0", ".", "=", "25%","Num of Peeps"};
     JTextPane displayPane = new JTextPane();
     JScrollPane scrollPane = new JScrollPane();
     JPanel btnPanel = new JPanel();
@@ -26,12 +26,14 @@ public class TipView extends JPanel {
         displayPane = new JTextPane();
         displayPane.setFont(new Font("Arial", Font.TRUETYPE_FONT, 40));
         displayPane.setEditable(false);
+
 //
 
         scrollPane = new JScrollPane(displayPane);
         scrollPane.setBorder(null);
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.getViewport().setBackground(CalcColors.DISPLAY_BACKGROUND);
+        add(scrollPane, gbc);
 
         //create JLabel for spacing
         JLabel lblNewLabel = new JLabel();
