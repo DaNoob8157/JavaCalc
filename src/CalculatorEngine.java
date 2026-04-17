@@ -90,6 +90,15 @@ public class CalculatorEngine {
             case "yard":
                 valueInMeters = value * 3;
                 break;
+            case "inch":
+                valueInMeters = value * 0.0254;
+                break;
+            case "millimeter":
+                valueInMeters = value / 0.000621371192;
+                break;
+            case "mile":
+                valueInMeters = value * 1609.34;
+                break;
 
             default:
                 throw new IllegalArgumentException("Unknown input unit: " + inputUnit);
@@ -112,12 +121,21 @@ public class CalculatorEngine {
             case "yard":
                 return valueInMeters / 3;
 
+            case "inch":
+                return valueInMeters / 0.0254;
+
+            case "millimeter":
+                return valueInMeters * 0.000621371192;
+
+            case "mile":
+                return valueInMeters / 1609.34;
+
             default:
                 throw new IllegalArgumentException("Unknown target unit: " + targetUnit);
         }
     }
 
-    public static double tipExpression(String tipPercentage, double bill) {
+    public static double tipExpression(String tipPercentage, double bill, int people) {
         double tip;
 
         switch (tipPercentage) {
@@ -143,6 +161,7 @@ public class CalculatorEngine {
                 }
                 break;
         }
-        return tip;
+        return tip/people;
+
     }
 }
