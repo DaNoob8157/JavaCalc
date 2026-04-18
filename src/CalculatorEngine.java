@@ -18,20 +18,20 @@ public class CalculatorEngine {
         String expression = s.replaceAll("\\s+", "");
 
         int opIndex = -1; // only starts scanning for the operator at index 1, so a - on the first number cannot be mistaken for an operator
-        for (int i = 1; i < expression.length(); i++) { // Assumes 'expression' is a String and 'opIndex' is an int
-            char op = expression.charAt(i); // Retrieves object at index i(which is 1)
-            if (op == '+' || op == '-' || op == '/' || op == 'X' || op == '%') {  // Checks if the object is an operator
-                opIndex = i; // Stores the index of the operator
+        for (int i = 1; i < expression.length(); i++) {
+            char op = expression.charAt(i);
+            if (op == '+' || op == '-' || op == '/' || op == 'X' || op == '%') {
+                opIndex = i;
                 break;
             }
         }
-        if (opIndex == -1) { // if the operator is first, the equation won't work
+        if (opIndex == -1) {
             return "Error: Invalid format, use: 'number' 'operator' 'number'";
         }
 
-        String A = expression.substring(0, opIndex); // first part of the equation
-        String operator = expression.substring(opIndex, opIndex + 1); //second part of the equation, operator only
-        String B = expression.substring(opIndex + 1); // third part of the equation
+        String A = expression.substring(0, opIndex);
+        String operator = expression.substring(opIndex, opIndex + 1);
+        String B = expression.substring(opIndex + 1);
 
         try {
             double a = Double.parseDouble(A);
@@ -66,70 +66,54 @@ public class CalculatorEngine {
 
     public static double convertExpression(String targetUnit, double value, String inputUnit) {
 
-        // Normalizes input to a standard unit (EX: meters or feet)
         double valueInMeters;
 
-        // Normalize input value to meters
         switch (inputUnit.toLowerCase()) {
             case "centimeter":
                 valueInMeters = value / 100.0;
                 break;
-
             case "kilometer":
                 valueInMeters = value * 1000.0;
                 break;
-
             case "meter":
                 valueInMeters = value;
                 break;
-
             case "foot":
-                valueInMeters = value * 0.3048; // Standard conversion
+                valueInMeters = value * 0.3048;
                 break;
-
             case "yard":
-                valueInMeters = value * 3;
+                valueInMeters = value * 0.9144;
                 break;
             case "inch":
                 valueInMeters = value * 0.0254;
                 break;
             case "millimeter":
-                valueInMeters = value / 0.000621371192;
+                valueInMeters = value / 1000.0;
                 break;
             case "mile":
                 valueInMeters = value * 1609.34;
                 break;
-
             default:
                 throw new IllegalArgumentException("Unknown input unit: " + inputUnit);
         }
 
-        // 2. Convert from meters to target unit
         switch (targetUnit.toLowerCase()) {
             case "centimeter":
                 return valueInMeters * 100.0;
-
             case "kilometer":
                 return valueInMeters / 1000.0;
-
             case "meter":
                 return valueInMeters;
-
             case "foot":
                 return valueInMeters / 0.3048;
-
             case "yard":
-                return valueInMeters / 3;
-
+                return valueInMeters / 0.9144;
             case "inch":
                 return valueInMeters / 0.0254;
-
             case "millimeter":
-                return valueInMeters * 0.000621371192;
-
+                return valueInMeters * 1000.0;
             case "mile":
                 return valueInMeters / 1609.34;
-
             default:
                 throw new IllegalArgumentException("Unknown target unit: " + targetUnit);
         }
@@ -161,7 +145,6 @@ public class CalculatorEngine {
                 }
                 break;
         }
-        return tip/people;
-
+        return tip / people;
     }
 }
