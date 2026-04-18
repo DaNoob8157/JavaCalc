@@ -7,11 +7,7 @@
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-
-import static java.awt.SystemColor.text;
 
 /**
  * TODO
@@ -69,18 +65,16 @@ public class CalculatorView extends JFrame {
 
     public void setButtonListener(ActionListener lstnr){
         btnLstnr = lstnr;
-        // Add listener to all cards - use SwingUtilities to ensure thread safety
-        SwingUtilities.invokeLater(() -> {
-            if (simpleCalcView != null) {
-                simpleCalcView.setButtonListener(lstnr);
-            }
-            if (tipView != null) {
-                tipView.setButtonListener(lstnr);
-            }
-            if (converterView != null) {
-                converterView.setButtonListener(lstnr);
-            }
-        });
+        // Add listener to all cards when they exist
+        if (simpleCalcView != null) {
+            simpleCalcView.setButtonListener(lstnr);
+        }
+        if (tipView != null) {
+            tipView.setButtonListener(lstnr);
+        }
+        if (converterView != null) {
+            converterView.setButtonListener(lstnr);
+        }
     }
     
     // Get the display pane from the currently active view
@@ -107,6 +101,13 @@ public class CalculatorView extends JFrame {
         tipView = new TipView();
         converterView = new ConverterView();
         
+        // Set button listeners for all views
+        if (btnLstnr != null) {
+            simpleCalcView.setButtonListener(btnLstnr);
+            tipView.setButtonListener(btnLstnr);
+            converterView.setButtonListener(btnLstnr);
+        }
+        
         // Add cards to card panel
         cardPanel.add(simpleCalcView, SIMPLE_CALC);
         cardPanel.add(tipView, TIP_VIEW);
@@ -129,8 +130,7 @@ public class CalculatorView extends JFrame {
 
     // Updates all UI components to match the current theme (dark or light mode).
     private void updateTheme() {
-        Color bgColor = isDarkMode ? Color.BLACK : Color.WHITE;
-        Color fgColor = isDarkMode ? Color.WHITE : Color.BLACK;
+        Color bgColor = isDarkMode ? CalcColors.BACKGROUND : CalcColors.LIGHT_BACKGROUND;
         
         // Apply theme to all cards
         if (simpleCalcView != null) {
@@ -143,7 +143,9 @@ public class CalculatorView extends JFrame {
             converterView.applyTheme(isDarkMode);
         }
         
-        cardPanel.setBackground(bgColor);
+        if (cardPanel != null) {
+            cardPanel.setBackground(bgColor);
+        }
     }
     
     // Methods to switch between views
@@ -159,15 +161,13 @@ public class CalculatorView extends JFrame {
         cardLayout.show(cardPanel, CONVERTER_VIEW);
     }
 
-    public static void updateDisplay(String text) {
-        displayPane.setText(text);
+    public TipView getTipView() {
+        return tipView;
     }
 
-    /* Main method to run and view boiler plate code */
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-           CalculatorView myCalculatorView = new CalculatorView();
-        });
+    public ConverterView getConverterView() {
+        return converterView;
     }
+
 }
 

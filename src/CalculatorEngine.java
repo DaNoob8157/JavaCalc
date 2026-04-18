@@ -93,6 +93,14 @@ public class CalculatorEngine {
             case "mile":
                 valueInMeters = value * 1609.34;
                 break;
+            case "nautical mile":
+            case "nautical miles":
+                valueInMeters = value * 1852.0;
+                break;
+            case "furlong":
+            case "furlongs":
+                valueInMeters = value * 201.168;
+                break;
             default:
                 throw new IllegalArgumentException("Unknown input unit: " + inputUnit);
         }
@@ -114,6 +122,12 @@ public class CalculatorEngine {
                 return valueInMeters * 1000.0;
             case "mile":
                 return valueInMeters / 1609.34;
+            case "nautical mile":
+            case "nautical miles":
+                return valueInMeters / 1852.0;
+            case "furlong":
+            case "furlongs":
+                return valueInMeters / 201.168;
             default:
                 throw new IllegalArgumentException("Unknown target unit: " + targetUnit);
         }

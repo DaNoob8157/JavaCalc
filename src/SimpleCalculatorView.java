@@ -33,26 +33,26 @@ public class SimpleCalculatorView extends JPanel {
     // Method to apply the selected theme to all components in the view
     public void applyTheme(boolean isDarkMode) {
         this.isDarkMode = isDarkMode;
-        Color bgColor = isDarkMode ? Color.BLACK : Color.WHITE;
-        Color fgColor = isDarkMode ? Color.WHITE : Color.BLACK;
-        Color btnBgColor = isDarkMode ? new Color(50, 50, 50) : new Color(220, 220, 220);
-        Color specialBtnBgColor = isDarkMode ? new Color(80, 80, 80) : new Color(180, 180, 180);
-        Color borderColor = isDarkMode ? Color.BLACK : Color.LIGHT_GRAY;
+        Color bgColor = isDarkMode ? CalcColors.BACKGROUND : CalcColors.LIGHT_BACKGROUND;
+        Color fgColor = isDarkMode ? CalcColors.DISPLAY_TEXT : CalcColors.LIGHT_DISPLAY_TEXT;
+        Color btnBgColor = isDarkMode ? CalcColors.BUTTON_BACKGROUND : CalcColors.LIGHT_BUTTON_BACKGROUND;
+        Color specialBtnBgColor = isDarkMode ? CalcColors.OPERATOR_BUTTON_BACKGROUND : CalcColors.LIGHT_OPERATOR_BUTTON_BACKGROUND;
+        Color borderColor = isDarkMode ? CalcColors.BUTTON_BORDER : CalcColors.LIGHT_BUTTON_BORDER;
 
         // Update background and foreground colors for the main panel and display
         this.setBackground(bgColor);
         if (displayPane != null) {
-            displayPane.setBackground(bgColor);
+            displayPane.setBackground(isDarkMode ? CalcColors.DISPLAY_BACKGROUND : CalcColors.LIGHT_DISPLAY_BACKGROUND);
             displayPane.setForeground(fgColor);
-            displayPane.setCaretColor(fgColor);
+            displayPane.setCaretColor(isDarkMode ? CalcColors.DISPLAY_CARET : CalcColors.LIGHT_DISPLAY_CARET);
         }
         if (scrollPane != null) {
-            scrollPane.getViewport().setBackground(bgColor);
+            scrollPane.getViewport().setBackground(isDarkMode ? CalcColors.DISPLAY_BACKGROUND : CalcColors.LIGHT_DISPLAY_BACKGROUND);
         }
         
         // Update button colors and borders
         if (btnPanel != null) {
-            btnPanel.setBackground(bgColor);
+            btnPanel.setBackground(isDarkMode ? CalcColors.BUTTON_PANEL_BACKGROUND : CalcColors.LIGHT_BUTTON_PANEL_BACKGROUND);
             for (Component c : btnPanel.getComponents()) {
                 if (c instanceof JButton) {
                     JButton button = (JButton) c;
@@ -62,7 +62,7 @@ public class SimpleCalculatorView extends JPanel {
                     } else {
                         button.setBackground(btnBgColor);
                     }
-                    button.setForeground(fgColor);
+                    button.setForeground(isDarkMode ? CalcColors.BUTTON_TEXT : CalcColors.LIGHT_BUTTON_TEXT);
                     button.setBorder(BorderFactory.createLineBorder(borderColor));
                 }
             }
