@@ -9,14 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-/**
- * TODO
- *
- * - Extend the view to include the converter
- * - Extend to incorporate different views for scientific, converter, & other
- * calculator features
- *
- * */
+
 public class CalculatorView extends JFrame {
 
     private ActionListener btnLstnr;

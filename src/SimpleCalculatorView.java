@@ -4,7 +4,7 @@ import java.awt.event.ActionListener;
 
 public class SimpleCalculatorView extends JPanel {
     private ActionListener btnLstnr;
-    private JPanel panel, btnPanel;
+    private JPanel btnPanel;
     static JTextPane displayPane;
     private JScrollPane scrollPane;
     private String[] btnTextArray = {"AC","DEL","%","+/-","THEME","1","2","3","/","CONVERT","4",
@@ -32,6 +32,7 @@ public class SimpleCalculatorView extends JPanel {
     
     // Method to apply the selected theme to all components in the view
     public void applyTheme(boolean isDarkMode) {
+        if (this.isDarkMode == isDarkMode) return;
         this.isDarkMode = isDarkMode;
         Color bgColor = isDarkMode ? CalcColors.BACKGROUND : CalcColors.LIGHT_BACKGROUND;
         Color fgColor = isDarkMode ? CalcColors.DISPLAY_TEXT : CalcColors.LIGHT_DISPLAY_TEXT;
