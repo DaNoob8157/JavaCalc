@@ -1,4 +1,4 @@
-# JavaCalc-Class
+<div align="center">JavaCalc-Class</div>
 
 A Java GUI calculator application built with Swing, focused on clear structure, event-driven interaction, and an easy-to-use interface.
 
