@@ -1,4 +1,4 @@
-<h1 align="center">JavaCalc</h1>
+<h1 align="center">Welcome to JavaCalc 👋</h1>
 
 A Java GUI calculator application built with Swing, focused on clear structure, event-driven interaction, and an easy-to-use interface.
 
