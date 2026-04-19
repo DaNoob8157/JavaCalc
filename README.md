@@ -64,6 +64,15 @@ Contains the calculation logic and processing rules.
 ### TipView
 Provides a tip calculator or related utility view.
 
+### ConverterView
+Provides a conversion calculator
+
+### SoundPlayer
+Separate class that stores the button sounds
+
+### CalcColors
+Separate class that stores the code for the background colors in the calculators
+
 ## User Interface
 
 The GUI is built using Java Swing and uses layout management rather than absolute positioning.  
@@ -84,7 +93,8 @@ Some of the challenges in this project include:
 
 Possible improvements for future versions:
 
-- Allowing the entire operation to show rather than just the first constant and operator
+- Allowing the entire operation to show rather than just the first constant and operator in simple calculator
+- adding more conversions for converter calculator
 
 ## Button Sound Credit
 

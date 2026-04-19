@@ -17,9 +17,9 @@ public class ConverterView extends JPanel {
     String[] btnTextArray = {
         "1", "2", "3", "Meter", "Foot", "Centimeter",
         "4", "5", "6", "Inches", "Yard", "Miles",
-        "7", "8", "9", "Kilogram", "Pound", "Ounces",
-        ".", "0", "=", "Liter", "Gallon", "Milliliters",
-        "TIP", "SIMPLE", "THEME", "EXIT", "Nautical Mile", "Furlong"
+        "7", "8", "9", "Millimeters", "Furlong",
+            "Nautical Mile", "0", "=", ".",
+        "TIP", "SIMPLE", "THEME", "EXIT"
     };
 
     /* === UI COMPONENTS === */

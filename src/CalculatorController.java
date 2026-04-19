@@ -10,7 +10,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.JTextPane;
 import java.util.ArrayList;
 import java.util.List;
-
 public class CalculatorController {
 
     CalculatorView myView;
@@ -87,7 +86,7 @@ public class CalculatorController {
             case "foot":
             case "centimeter":
             case "inches":
-            case "millimeter":
+            case "millimeters":
             case "milliliters":
             case "milimeter":
             case "yard":
@@ -119,7 +118,7 @@ public class CalculatorController {
                 return "centimeter";
             case "inches":
                 return "inch";
-            case "millimeter":
+            case "millimeters":
             case "milliliters":
             case "milimeter":
                 return "millimeter";
