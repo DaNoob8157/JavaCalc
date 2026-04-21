@@ -22,7 +22,7 @@ Current and planned features may include:
 - Multiple views/tools such as:
   - Calculator
   - Tip calculator
-  - Other utility panels
+  - Other utility panels such as a conversion calculator
 
 ## How It Works
 
@@ -95,6 +95,8 @@ Possible improvements for future versions:
 
 - Allowing the entire operation to show rather than just the first constant and operator in simple calculator
 - adding more conversions for converter calculator
+- The history is a little bit buggy, and disorganized 
+- Making it so that the simple calculator can do PEMDAS(order of operations)
 
 ## Button Sound Credit
 
